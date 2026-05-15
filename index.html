@@ -79,7 +79,7 @@
         
         <div class="progress-box">
             <div class="progress-text-container">
-                <span>جاهزيتك للمقابلة العمل</span>
+                <span>جاهزيتك لمقابلة العمل</span>
                 <span id="progressPercent">0%</span>
             </div>
             <div class="progress-bar-bg">
@@ -91,7 +91,7 @@
             
             <div class="section-title">المرحلة الأولى: كسر الجليد</div>
             <div class="lesson-item active" id="job-lesson-1">
-                <div class="lesson-info" onclick="playMedia('ضع_رابط_فيديو_المقدمة_هنا', '1. تكتيك المقابلة التعريفية (Tell Me About Yourself)', 'تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.', 'cloudinary', this.parentElement)">
+                <div class="lesson-info" onclick="playMedia('1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L', '1. تكتيك المقابلة التعريفية (Tell Me About Yourself)', 'تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.', 'drive', this.parentElement)">
                     <i class="fas fa-user-tie"></i> <span>1. تكتيك المقابلة التعريفية</span>
                 </div>
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-1', event)"><i class="fas fa-check-circle"></i></div>
@@ -99,7 +99,7 @@
             
             <div class="section-title">المرحلة الثانية: الاستراتيجيات السلوكية</div>
             <div class="lesson-item" id="job-lesson-2">
-                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_درايف_هنا', '2. تفكيك الأسئلة السلوكية وتكنيك STAR', 'كيف تجيب على أسئلة المواقف الصعبة والتحديات السابقة باستخدام هيكل (Situation, Task, Action, Result) الأكاديمي.', 'drive', this.parentElement)">
+                <div class="lesson-info" onclick="playMedia('1T_razDpIHTI0eVbzDLg-kDy52z9r1a6Q', '2. تفكيك الأسئلة السلوكية وتكنيك STAR الاحترافي', 'كيف تجيب على أسئلة المواقف الصعبة والتحديات السابقة باستخدام هيكل (Situation, Task, Action, Result) الأكاديمي.', 'drive', this.parentElement)">
                     <i class="fas fa-brain"></i> <span>2. تفكيك الأسئلة السلوكية (STAR)</span>
                 </div>
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-2', event)"><i class="fas fa-check-circle"></i></div>
@@ -107,8 +107,8 @@
 
             <div class="section-title">المرحلة الثالثة: لغة الجسد والثقة الشخصية</div>
             <div class="lesson-item" id="job-lesson-3">
-                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_درايف_هنا', '3. أسرار لغة الجسد ونبرة الصوت الاحترافية', 'قواعد بصرية ونفسية هامة لتبدو واثقاً كالمتحدثين الأصليين أمام اللجان العالمية والمحلية الكبرى.', 'drive', this.parentElement)">
-                    <i class="fas fa-comments"></i> <span>3. لغة الجسد ونبرة الصوت</span>
+                <div class="lesson-info" onclick="playMedia('1UH6uRfp5jgAt2oQFHuLbtr3KwL81DLun', '3. أسرار لغة الجسد ونبرة الصوت للمقابلات', 'قواعد بصرية ونفسية هامة لتبدو واثقاً كالمتحدثين الأصليين أمام اللجان العالمية والمحلية الكبرى.', 'drive', this.parentElement)">
+                    <i class="fas fa-comments"></i> <span>3. أسرار لغة الجسد ونبرة الصوت</span>
                 </div>
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-3', event)"><i class="fas fa-check-circle"></i></div>
             </div>
@@ -148,8 +148,8 @@
 
     <main class="main-content">
         <div class="video-container" id="playerWrapper">
-            <video id="directVideo" controls autoplay><source src="وضع_رابط_فيديو_الترحيب_الافتراضي_هنا" type="video/mp4"></video>
-            <iframe id="driveFrame" style="display:none;" allow="autoplay" allowfullscreen></iframe>
+            <iframe id="driveFrame" src="https://drive.google.com/file/d/1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L/preview" allow="autoplay" allowfullscreen></iframe>
+            <video id="directVideo" controls autoplay style="display:none;"></video>
         </div>
         <div class="details">
             <div class="details-text">
@@ -164,7 +164,7 @@
 
     <script>
         let currentLessonId = 'job-lesson-1';
-        let currentVideoType = 'cloudinary';
+        let currentVideoType = 'drive';
         const totalLessonsCount = 5;
 
         function checkAccess() {
