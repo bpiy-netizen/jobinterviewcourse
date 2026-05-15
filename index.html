@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أكاديمية تكتيكات مقابلات العمل | Job Interview Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        :root { 
+            --bg: #0a1128; 
+            --sidebar: #101f42; 
+            --accent: #00b4d8; 
+            --text: #e2e8f0; 
+            --success: #10b981;
+        }
+        body { margin: 0; font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
+        
+        #lock-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .login-box { background: var(--sidebar); padding: 40px; border-radius: 20px; border: 1px solid var(--accent); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .login-box input { padding: 12px; border-radius: 8px; border: none; width: 220px; text-align: center; margin-bottom: 15px; outline: none; font-family: 'Cairo', sans-serif; font-size: 1rem; }
+        .login-box button { background: var(--accent); color: white; border: none; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif; transition: 0.3s; }
+        .login-box button:hover { background: #0077b6; }
+
+        .sidebar { width: 350px; background: var(--sidebar); border-left: 1px solid rgba(0,180,216,0.2); display: flex; flex-direction: column; }
+        .sidebar-header { padding: 25px 25px 15px 25px; text-align: center; border-bottom: 1px solid rgba(0,180,216,0.1); }
+        .sidebar-header img { max-width: 140px; }
+        
+        /* شريط التقدم التفاعلي للوظائف */
+        .progress-box { padding: 15px 20px; background: rgba(0,180,216,0.05); margin: 0; border-bottom: 1px solid rgba(0,180,216,0.15); font-size: 0.85rem; }
+        .progress-text-container { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text); }
+        .progress-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), #90e0ef); transition: width 0.4s ease; border-radius: 10px; }
+
+        .lessons-list { flex-grow: 1; overflow-y: auto; padding: 15px; }
+        
+        .section-title { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 15px 5px 5px 5px; padding-bottom: 5px; border-bottom: 1px solid rgba(0,180,216,0.1); }
+        .lesson-item { background: rgba(255,255,255,0.02); padding: 12px 15px; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: 0.3s; font-size: 0.95rem; }
+        .lesson-item .lesson-info { display: flex; align-items: center; gap: 12px; flex-grow: 1; }
+        .lesson-item.active { background: var(--accent); color: white; font-weight: bold; }
+        .lesson-item i { font-size: 1.1rem; }
+        
+        /* روابط ملفات الـ PDF الخاصة بالتوظيف */
+        .pdf-item { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); color: #34d399; text-decoration: none; }
+        .pdf-item:hover { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; transform: translateY(-1px); }
+        .pdf-item i.fa-file-pdf { color: var(--success); font-size: 1.2rem; }
+        .pdf-item i.fa-external-link-alt { font-size: 0.85rem; opacity: 0.7; }
+
+        /* أيقونة الصح التفاعلية */
+        .completion-btn-zone { padding: 5px; cursor: pointer; color: rgba(255,255,255,0.2); transition: 0.2s; }
+        .completion-btn-zone:hover { color: var(--success); }
+        .lesson-item.completed-item .completion-btn-zone { color: var(--success); }
+        .lesson-item.active .completion-btn-zone { color: rgba(255,255,255,0.4); }
+        .lesson-item.active.completed-item .completion-btn-zone { color: white; }
+
+        .main-content { flex-grow: 1; display: flex; flex-direction: column; background: #020617; }
+        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; }
+        iframe, video { width: 100%; height: 100%; border: none; position: absolute; top: 0; left: 0; }
+        
+        .details { padding: 30px; background: #070a13; border-top: 1px solid rgba(0,180,216,0.1); flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
+        .details-text h1 { color: var(--accent); margin: 0; font-size: 1.8rem; }
+        .details-text p { margin-top: 10px; color: #94a3b8; line-height: 1.7; font-size: 1.05rem; }
+        
+        .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
+
+        @media (max-width: 1000px) { body { flex-direction: column; overflow: auto; } .sidebar { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <div class="login-box">
+            <h2 style="color:var(--accent)">دخول منصة تكتيكات المقابلات</h2>
+            <input type="password" id="passCode" placeholder="أدخل رمز الدخول">
+            <br>
+            <button onclick="checkAccess()">دخول المنصة</button>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header"><img src="https://res.cloudinary.com/dr3i6fqai/image/upload/v1778798404/117_z6fozk.png"></div>
+        
+        <div class="progress-box">
+            <div class="progress-text-container">
+                <span>جاهزيتك للمقابلة العمل</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="lessons-list">
+            
+            <div class="section-title">المرحلة الأولى: كسر الجليد</div>
+            <div class="lesson-item active" id="job-lesson-1">
+                <div class="lesson-info" onclick="playMedia('ضع_رابط_فيديو_المقدمة_هنا', '1. تكتيك المقابلة التعريفية (Tell Me About Yourself)', 'تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.', 'cloudinary', this.parentElement)">
+                    <i class="fas fa-user-tie"></i> <span>1. تكتيك المقابلة التعريفية</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-1', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+            
+            <div class="section-title">المرحلة الثانية: الاستراتيجيات السلوكية</div>
+            <div class="lesson-item" id="job-lesson-2">
+                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_درايف_هنا', '2. تفكيك الأسئلة السلوكية وتكنيك STAR', 'كيف تجيب على أسئلة المواقف الصعبة والتحديات السابقة باستخدام هيكل (Situation, Task, Action, Result) الأكاديمي.', 'drive', this.parentElement)">
+                    <i class="fas fa-brain"></i> <span>2. تفكيك الأسئلة السلوكية (STAR)</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-2', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">المرحلة الثالثة: لغة الجسد والثقة الشخصية</div>
+            <div class="lesson-item" id="job-lesson-3">
+                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_درايف_هنا', '3. أسرار لغة الجسد ونبرة الصوت الاحترافية', 'قواعد بصرية ونفسية هامة لتبدو واثقاً كالمتحدثين الأصليين أمام اللجان العالمية والمحلية الكبرى.', 'drive', this.parentElement)">
+                    <i class="fas fa-comments"></i> <span>3. لغة الجسد ونبرة الصوت</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-3', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">المرحلة الرابعة: التعامل مع الأسئلة الفخ</div>
+            <div class="lesson-item" id="job-lesson-4">
+                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_درايف_هنا', '4. الإجابة الذكية على نقاط الضعف والأسباب البيعية', 'تكتيكات تحويل نقاط ضعفك إلى نقاط قوة، وشرح أسباب ترك الوظيفة السابقة بذكاء وبدون أي سلبية.', 'drive', this.parentElement)">
+                    <i class="fas fa-shield-alt"></i> <span>4. الإجابة على الأسئلة الفخ</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-4', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">المرحلة الخامسة: المحاكاة والتقييم</div>
+            <div class="lesson-item" id="job-lesson-5">
+                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_درايف_هنا', '5. نموذج المقابلة التجريبية الشاملة (Mock Interview)', 'فيديو محاكاة كامل لمقابلة عمل حقيقية يستعرض سيناريوهات الصواب والخطأ لتطبيق كل ما تعلمته.', 'drive', this.parentElement)">
+                    <i class="fas fa-graduation-cap"></i> <span>5. نموذج مقابلة تجريبية شاملة</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-5', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">حقيبة التوظيف والمرفقات (PDFs)</div>
+            <a href="ضع_رابط_ملف_السير_الذاتية_هنا" target="_blank" class="lesson-item pdf-item">
+                <div class="lesson-info">
+                    <i class="fas fa-file-pdf"></i> <span>أفضل قوالب السير الذاتية (CV) للشركات العالمية</span>
+                </div>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="ضع_رابط_ملف_رسائل_المتابعة_هنا" target="_blank" class="lesson-item pdf-item">
+                <div class="lesson-info">
+                    <i class="fas fa-file-pdf"></i> <span>نماذج رسائل البريد لمتابعة الطلب (Follow-up Emails)</span>
+                </div>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="video-container" id="playerWrapper">
+            <video id="directVideo" controls autoplay><source src="وضع_رابط_فيديو_الترحيب_الافتراضي_هنا" type="video/mp4"></video>
+            <iframe id="driveFrame" style="display:none;" allow="autoplay" allowfullscreen></iframe>
+        </div>
+        <div class="details">
+            <div class="details-text">
+                <h1 id="titleText">1. تكتيك المقابلة التعريفية (Tell Me About Yourself)</h1>
+                <p id="descText">تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.</p>
+                <div class="resume-alert" id="resumeAlert">
+                    <i class="fas fa-history"></i> <span id="resumeAlertText">توقفت سابقاً عند الدقيقة 0:00</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentLessonId = 'job-lesson-1';
+        let currentVideoType = 'cloudinary';
+        const totalLessonsCount = 5; // إجمالي عدد الدروس المتاحة للمقابلة
+
+        function checkAccess() {
+            if(document.getElementById('passCode').value === '51talk') {
+                document.getElementById('lock-screen').style.display = 'none';
+                loadUserData();
+            } else {
+                alert('الرمز خطأ!');
+            }
+        }
+
+        function playMedia(source, title, desc, type, el) {
+            document.querySelectorAll('.lesson-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            currentLessonId = el.id;
+            currentVideoType = type;
+
+            document.getElementById('titleText').innerText = title;
+            document.getElementById('descText').innerText = desc;
+            
+            const video = document.getElementById('directVideo');
+            const iframe = document.getElementById('driveFrame');
+            const resumeAlert = document.getElementById('resumeAlert');
+            
+            resumeAlert.style.display = 'none';
+
+            if(type === 'drive') {
+                video.style.display = 'none';
+                video.pause();
+                iframe.style.display = 'block';
+                iframe.src = `https://drive.google.com/file/d/${source}/preview`;
+                
+                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
+                if (savedTime && parseFloat(savedTime) > 5) {
+                    let mins = Math.floor(savedTime / 60);
+                    let secs = Math.floor(savedTime % 60);
+                    document.getElementById('resumeAlertText').innerText = `توقفت سابقاً عند الدقيقة ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    resumeAlert.style.display = 'flex';
+                }
+            } else {
+                iframe.style.display = 'none';
+                iframe.src = '';
+                video.style.display = 'block';
+                video.src = source;
+                video.play();
+
+                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
+                if (savedTime) {
+                    video.currentTime = parseFloat(savedTime);
+                }
+            }
+            
+            localStorage.setItem('job_last_watched', currentLessonId);
+        }
+
+        const directVideoPlayer = document.getElementById('directVideo');
+        directVideoPlayer.ontimeupdate = function() {
+            if (currentVideoType === 'cloudinary' && directVideoPlayer.currentTime > 2) {
+                localStorage.setItem('job_time_' + currentLessonId, directVideoPlayer.currentTime);
+            }
+        };
+
+        function updateProgressBar() {
+            const completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
+            const completedLessonsCount = completedList.filter(id => id.startsWith('job-lesson-')).length;
+            const percentage = Math.round((completedLessonsCount / totalLessonsCount) * 100);
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressPercent').innerText = percentage + '%';
+        }
+
+        function toggleLessonCompletion(id, event) {
+            if(event) event.stopPropagation(); 
+            
+            const el = document.getElementById(id);
+            let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
+            
+            if (el.classList.contains('completed-item')) {
+                el.classList.remove('completed-item');
+                completedList = completedList.filter(itemId => itemId !== id);
+            } else {
+                el.classList.add('completed-item');
+                if (!completedList.includes(id)) completedList.push(id);
+            }
+            
+            localStorage.setItem('job_completed_lessons', JSON.stringify(completedList));
+            updateProgressBar();
+        }
+
+        function loadUserData() {
+            let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
+            completedList.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('completed-item');
+            });
+
+            updateProgressBar();
+
+            let lastLesson = localStorage.getItem('job_last_watched');
+            if (lastLesson) {
+                const el = document.getElementById(lastLesson);
+                if (el) {
+                    const infoEl = el.querySelector('.lesson-info');
+                    if(infoEl) infoEl.click();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
