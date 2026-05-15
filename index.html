@@ -24,9 +24,8 @@
 
         .sidebar { width: 350px; background: var(--sidebar); border-left: 1px solid rgba(0,180,216,0.2); display: flex; flex-direction: column; }
         .sidebar-header { padding: 25px 25px 15px 25px; text-align: center; border-bottom: 1px solid rgba(0,180,216,0.1); }
-        .sidebar-header img { max-width: 140px; }
+        .sidebar-header img { max-width: 160px; height: auto; }
         
-        /* شريط التقدم التفاعلي للوظائف */
         .progress-box { padding: 15px 20px; background: rgba(0,180,216,0.05); margin: 0; border-bottom: 1px solid rgba(0,180,216,0.15); font-size: 0.85rem; }
         .progress-text-container { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text); }
         .progress-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
@@ -40,13 +39,11 @@
         .lesson-item.active { background: var(--accent); color: white; font-weight: bold; }
         .lesson-item i { font-size: 1.1rem; }
         
-        /* روابط ملفات الـ PDF الخاصة بالتوظيف */
         .pdf-item { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); color: #34d399; text-decoration: none; }
         .pdf-item:hover { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; transform: translateY(-1px); }
         .pdf-item i.fa-file-pdf { color: var(--success); font-size: 1.2rem; }
         .pdf-item i.fa-external-link-alt { font-size: 0.85rem; opacity: 0.7; }
 
-        /* أيقونة الصح التفاعلية */
         .completion-btn-zone { padding: 5px; cursor: pointer; color: rgba(255,255,255,0.2); transition: 0.2s; }
         .completion-btn-zone:hover { color: var(--success); }
         .lesson-item.completed-item .completion-btn-zone { color: var(--success); }
@@ -78,7 +75,7 @@
     </div>
 
     <aside class="sidebar">
-        <div class="sidebar-header"><img src="https://res.cloudinary.com/dr3i6fqai/image/upload/v1778798404/117_z6fozk.png"></div>
+        <div class="sidebar-header"><img src="https://res.cloudinary.com/dr3i6fqai/image/upload/v1778799805/logo_anelqt.png"></div>
         
         <div class="progress-box">
             <div class="progress-text-container">
@@ -168,7 +165,7 @@
     <script>
         let currentLessonId = 'job-lesson-1';
         let currentVideoType = 'cloudinary';
-        const totalLessonsCount = 5; // إجمالي عدد الدروس المتاحة للمقابلة
+        const totalLessonsCount = 5;
 
         function checkAccess() {
             if(document.getElementById('passCode').value === '51talk') {
