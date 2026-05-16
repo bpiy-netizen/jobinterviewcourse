@@ -70,7 +70,6 @@
         
         .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
 
-        /* واجهة المساعد سامر الذكي والبديل */
         .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 340px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
         .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
         .samir-avatar { width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; position: relative; }
@@ -327,11 +326,10 @@
             }
         }
 
-        // ==========================================
-        //  محرك "سامر الـ HR" الصوتي المعتمد على الـ Web Speech & Gemini
-        // ==========================================
+        // ==================================================
+        //  محرك "سامر الـ HR" الصوتي المطور والمحمي من أخطاء الـ CORS
+        // ==================================================
         
-        // تم ربط مفتاح الـ API الخاص بك هنا بنجاح ليعمل السكربت مجاناً وباقة مفتوحة
         const GEMINI_API_KEY = "AIzaSyCzTyv3Nv2K4Zb0xVPULCkosce-VWkNhEU"; 
         
         let recognition;
@@ -435,14 +433,21 @@
                 parts: [{ text: studentResponse }]
             });
 
+            // قمنا باستخدام بريدج وسيط ومفتوح (CORS Proxy) لتخطي حظر المتصفحات للطلبات المباشرة
+            const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`;
+
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(proxyUrl, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ contents: conversationHistory })
                 });
 
-                const data = await response.json();
+                const outerData = await response.json();
+                
+                // فك تشفير البيانات القادمة من البروكسي
+                const data = JSON.parse(outerData.contents);
                 const samirReply = data.candidates[0].content.parts[0].text;
                 
                 conversationHistory.push({
@@ -455,7 +460,7 @@
 
             } catch (error) {
                 console.error("Gemini Connect Error:", error);
-                showSamirText("عذراً، حدث خطأ أثناء الاتصال بالمساعد الذكي. يرجى مراجعة حالة الخادم.");
+                showSamirText("عذراً، واجه المتصفح قيود اتصال. يرجى تجربة تشغيل الملف أو تحديث الصفحة.");
             }
         }
     </script>
