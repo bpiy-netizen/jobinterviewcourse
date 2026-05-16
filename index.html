@@ -92,6 +92,14 @@
 
         @media (max-width: 1000px) { body { flex-direction: column; overflow: auto; } .sidebar { width: 100%; } .samir-widget { width: calc(100% - 40px); left: 20px; bottom: 10px; } }
     </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/generative-ai": "https://esm.run/@google/generative-ai"
+        }
+      }
+    </script>
 </head>
 <body>
 
@@ -325,22 +333,23 @@
                 }
             }
         }
+    </script>
 
-        // ==================================================
-        //  محرك "سامر الـ HR" الصوتي المطور والمصلح بالكامل
-        // ==================================================
-        
-        const GEMINI_API_KEY = "AIzaSyCzTyv3Nv2K4Zb0xVPULCkosce-VWkNhEU"; 
-        
+    <script type="module">
+        import { GoogleGenAI } from "@google/generative-ai";
+
+        const GEMINI_API_KEY = "AIzaSyCzTyv3Nv2K4Zb0xVPULCkosce-VWkNhEU";
+        const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
+        let modelChat;
+
         let recognition;
-        let conversationHistory = [];
         let isListening = false;
 
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognition = new SpeechRecognition();
             recognition.continuous = false;
-            recognition.lang = 'en-US'; 
+            recognition.lang = 'en-US';
             recognition.interimResults = false;
 
             recognition.onstart = () => {
@@ -377,12 +386,12 @@
             micBtn.classList.remove('listening');
         }
 
-        function toggleMic() {
+        window.toggleMic = function() {
             if (!recognition) return;
             if (isListening) {
                 recognition.stop();
             } else {
-                recognition.lang = 'en-US'; 
+                recognition.lang = 'en-US';
                 recognition.start();
             }
         }
@@ -395,72 +404,60 @@
 
         function samirSpeak(text) {
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); 
+                window.speechSynthesis.cancel();
                 
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US'; 
-                utterance.rate = 0.95; 
+                utterance.lang = 'en-US';
+                utterance.rate = 0.95;
                 
                 utterance.onend = () => {
-                    setTimeout(() => { toggleMic(); }, 400);
+                    setTimeout(() => { window.toggleMic(); }, 500);
                 };
 
                 window.speechSynthesis.speak(utterance);
             }
         }
 
-        function initSamir() {
+        window.initSamir = async function() {
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
-            
-            conversationHistory = [
-                {
-                    role: "user",
-                    parts: [{ text: "You are 'Mr. Samir', an expert HR manager conducting a realistic job interview. Speak ONLY in clear English. Keep your responses brief, professional, and limited to one follow-up question at a time to keep it interactive. Start by greeting me and asking the first interview question: 'Tell me about yourself'." }]
-                }
-            ];
+            showSamirText("جاري تشغيل المساعد الصوتي... ⏳");
 
-            const initialGreeting = "Hello! I am Mr. Samir, your HR interviewer today. Let's start our mock interview. Could you please tell me about yourself?";
-            showSamirText(`سامر: ${initialGreeting}`);
-            samirSpeak(initialGreeting);
+            try {
+                // تفعيل نظام الدردشة الاحترافي المباشر (Chat Sessions) المدعوم من غوغل للمتصفحات
+                modelChat = ai.getGenerativeModel({ model: "gemini-1.5-flash" }).startChat({
+                    history: [
+                        {
+                            role: "user",
+                            parts: [{ text: "You are 'Mr. Samir', an expert HR manager conducting a realistic job interview. Speak ONLY in clear English. Keep your responses brief, professional, and limited to one follow-up question at a time to keep it interactive. Start by greeting me and asking the first interview question: 'Tell me about yourself'." }]
+                        }
+                    ]
+                });
+
+                const initialGreeting = "Hello! I am Mr. Samir, your HR interviewer today. Let's start our mock interview. Could you please tell me about yourself?";
+                showSamirText(`سامر: ${initialGreeting}`);
+                samirSpeak(initialGreeting);
+
+            } catch (err) {
+                console.error("Initialization Error: ", err);
+                showSamirText("فشل إعداد المساعد الصوتي. تأكد من اتصال الإنترنت الخاص بك.");
+            }
         }
 
         async function talkToGemini(studentResponse) {
             showSamirText("سامر يفكر... 🧠");
-            
-            conversationHistory.push({
-                role: "user",
-                parts: [{ text: studentResponse }]
-            });
-
-            // تم إصلاح مسار الإرسال ليعمل باتصال POST مباشر وصحيح مدعوم من واجهة Google المستقرة
-            const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
             try {
-                const response = await fetch(targetUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ contents: conversationHistory })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`HTTP Error Status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                const samirReply = data.candidates[0].content.parts[0].text;
+                // إرسال الرد واستقبال النتيجة بشكل آمن وتلقائي عبر المكتبة الرسمية
+                const result = await modelChat.sendMessage(studentResponse);
+                const samirReply = result.response.text();
                 
-                conversationHistory.push({
-                    role: "model",
-                    parts: [{ text: samirReply }]
-                });
-
                 showSamirText(`سامر: ${samirReply}`);
                 samirSpeak(samirReply);
 
             } catch (error) {
-                console.error("Gemini Connect Error:", error);
-                showSamirText("جاري معالجة الاتصال... يرجى إعادة المحاولة أو تشغيل الرابط من متصفح داعم للـ Local API.");
+                console.error("Gemini SDK Error:", error);
+                showSamirText("عذراً، حدث خطأ أثناء الاتصال. يرجى الضغط على زر تحدث الآن والمحاولة مجدداً.");
             }
         }
     </script>
