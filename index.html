@@ -92,14 +92,6 @@
 
         @media (max-width: 1000px) { body { flex-direction: column; overflow: auto; } .sidebar { width: 100%; } .samir-widget { width: calc(100% - 40px); left: 20px; bottom: 10px; } }
     </style>
-
-    <script type="importmap">
-      {
-        "imports": {
-          "@google/generative-ai": "https://esm.run/@google/generative-ai"
-        }
-      }
-    </script>
 </head>
 <body>
 
@@ -218,20 +210,32 @@
             مرحباً بك! اضغط على زر "ابدأ المقابلة التجريبية" لبدء السيناريو الصوتي التفاعلي مع الأستاذ سامر..
         </div>
         <div class="samir-controls">
-            <button class="samir-btn btn-start" id="startBtn" onclick="window.initSamir()">ابدأ المقابلة التجريبية <i class="fas fa-play"></i></button>
-            <button class="samir-btn btn-mic" id="micBtn" onclick="window.toggleMic()">تحدث الآن <i class="fas fa-microphone"></i></button>
+            <button class="samir-btn btn-start" id="startBtn" onclick="initSamir()">ابدأ المقابلة التجريبية <i class="fas fa-play"></i></button>
+            <button class="samir-btn btn-mic" id="micBtn" onclick="toggleMic()">تحدث الآن <i class="fas fa-microphone"></i></button>
         </div>
     </div>
+
+    <script type="module">
+        import { GoogleGenAI } from "https://esm.run/@google/generative-ai";
+        window.GoogleGenAI = GoogleGenAI;
+    </script>
 
     <script>
         let currentLessonId = 'job-lesson-1';
         let currentVideoType = 'drive';
         const totalLessonsCount = 4;
 
+        // ثوابت المساعد الذكي والمفتاح الخاص بك
+        const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
+        let modelChat;
+        let recognition;
+        let isListening = false;
+
         function checkAccess() {
             if(document.getElementById('passCode').value === '51talk') {
                 document.getElementById('lock-screen').style.display = 'none';
                 loadUserData();
+                initSpeechRecognition();
             } else {
                 alert('الرمز خطأ!');
             }
@@ -333,51 +337,42 @@
                 }
             }
         }
-    </script>
 
-    <script type="module">
-        import { GoogleGenAI } from "@google/generative-ai";
+        // إعداد التعرف الصوتي بشكل نظيف ومستقل
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
 
-        const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
-        
-        const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
-        let modelChat;
+                recognition.onstart = () => {
+                    isListening = true;
+                    const micBtn = document.getElementById('micBtn');
+                    micBtn.innerHTML = 'جاري الاستماع... <i class="fas fa-spinner fa-spin"></i>';
+                    micBtn.classList.add('listening');
+                };
 
-        let recognition;
-        let isListening = false;
+                recognition.onerror = (e) => {
+                    console.error("Speech Recognition Error: ", e);
+                    stopMicUI();
+                };
 
-        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
+                recognition.onend = () => {
+                    stopMicUI();
+                };
 
-            recognition.onstart = () => {
-                isListening = true;
-                const micBtn = document.getElementById('micBtn');
-                micBtn.innerHTML = 'جاري الاستماع... <i class="fas fa-spinner fa-spin"></i>';
-                micBtn.classList.add('listening');
-            };
-
-            recognition.onerror = (e) => {
-                console.error("Speech Recognition Error: ", e);
-                stopMicUI();
-            };
-
-            recognition.onend = () => {
-                stopMicUI();
-            };
-
-            recognition.onresult = async (event) => {
-                const studentText = event.results[0][0].transcript;
-                if (!studentText.trim()) return;
-                
-                showSamirText(`أنت: ${studentText}`);
-                await talkToGemini(studentText);
-            };
-        } else {
-            document.getElementById('samirTextBox').innerText = "متصفحك لا يدعم التعرف الصوتي المباشر، يرجى استخدام متصفح Google Chrome أو Safari.";
+                recognition.onresult = async (event) => {
+                    const studentText = event.results[0][0].transcript;
+                    if (!studentText.trim()) return;
+                    
+                    showSamirText(`أنت: ${studentText}`);
+                    await talkToGemini(studentText);
+                };
+            } else {
+                document.getElementById('samirTextBox').innerText = "متصفحك لا يدعم التعرف الصوتي المباشر، يرجى استخدام متصفح Google Chrome.";
+            }
         }
 
         function stopMicUI() {
@@ -387,8 +382,7 @@
             micBtn.classList.remove('listening');
         }
 
-        // جعل الكبسة ترى وظيفة المايكروفون
-        window.toggleMic = function() {
+        function toggleMic() {
             if (!recognition) return;
             if (isListening) {
                 recognition.stop();
@@ -413,20 +407,26 @@
                 utterance.rate = 0.95;
                 
                 utterance.onend = () => {
-                    setTimeout(() => { window.toggleMic(); }, 500);
+                    setTimeout(() => { toggleMic(); }, 500);
                 };
 
                 window.speechSynthesis.speak(utterance);
             }
         }
 
-        // جعل الكبسة ترى وظيفة بدء التشغيل
-        window.initSamir = async function() {
+        // الوظيفة الرئيسية لبدء المحاكاة - الآن مرئية للزر 100%
+        async function initSamir() {
+            if (!window.GoogleGenAI) {
+                showSamirText("⚠️ جاري تحميل المكتبات الذكية، يرجى الانتظار ثانيتين ثم الضغط مجدداً..");
+                return;
+            }
+
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
             showSamirText("جاري تشغيل المساعد الصوتي... ⏳");
 
             try {
+                const ai = new window.GoogleGenAI({ apiKey: GEMINI_API_KEY });
                 modelChat = ai.getGenerativeModel({ model: "gemini-1.5-flash" }).startChat({
                     history: [
                         {
@@ -442,7 +442,7 @@
 
             } catch (err) {
                 console.error("Initialization Error: ", err);
-                showSamirText("فشل إعداد المساعد الصوتي. تأكد من اتصال الإنترنت الخاص بك وسهولة استخدام السيرفر.");
+                showSamirText("فشل إعداد المساعد الصوتي. تأكد من اتصالك بالإنترنت.");
             }
         }
 
