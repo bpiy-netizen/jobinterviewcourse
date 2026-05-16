@@ -338,7 +338,9 @@
     <script type="module">
         import { GoogleGenAI } from "@google/generative-ai";
 
-        const GEMINI_API_KEY = "AIzaSyCzTyv3Nv2K4Zb0xVPULCkosce-VWkNhEU";
+        // تم حقن مفتاح الـ API الجديد والنظيف هنا بنجاح
+        const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
+        
         const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
         let modelChat;
 
@@ -424,7 +426,6 @@
             showSamirText("جاري تشغيل المساعد الصوتي... ⏳");
 
             try {
-                // تفعيل نظام الدردشة الاحترافي المباشر (Chat Sessions) المدعوم من غوغل للمتصفحات
                 modelChat = ai.getGenerativeModel({ model: "gemini-1.5-flash" }).startChat({
                     history: [
                         {
@@ -440,7 +441,7 @@
 
             } catch (err) {
                 console.error("Initialization Error: ", err);
-                showSamirText("فشل إعداد المساعد الصوتي. تأكد من اتصال الإنترنت الخاص بك.");
+                showSamirText("فشل إعداد المساعد الصوتي. تأكد من صحة مفتاح الـ API الخاص بك.");
             }
         }
 
@@ -448,7 +449,6 @@
             showSamirText("سامر يفكر... 🧠");
 
             try {
-                // إرسال الرد واستقبال النتيجة بشكل آمن وتلقائي عبر المكتبة الرسمية
                 const result = await modelChat.sendMessage(studentResponse);
                 const samirReply = result.response.text();
                 
@@ -457,7 +457,7 @@
 
             } catch (error) {
                 console.error("Gemini SDK Error:", error);
-                showSamirText("عذراً، حدث خطأ أثناء الاتصال. يرجى الضغط على زر تحدث الآن والمحاولة مجدداً.");
+                showSamirText("عذراً، حدث خطأ أثناء الاتصال. تأكد من أن المفتاح الجديد يعمل بشكل سليم واضغط 'تحدث الآن' للمحاولة.");
             }
         }
     </script>
