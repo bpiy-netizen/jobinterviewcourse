@@ -218,8 +218,8 @@
             مرحباً بك! اضغط على زر "ابدأ المقابلة التجريبية" لبدء السيناريو الصوتي التفاعلي مع الأستاذ سامر..
         </div>
         <div class="samir-controls">
-            <button class="samir-btn btn-start" id="startBtn" onclick="initSamir()">ابدأ المقابلة التجريبية <i class="fas fa-play"></i></button>
-            <button class="samir-btn btn-mic" id="micBtn" onclick="toggleMic()">تحدث الآن <i class="fas fa-microphone"></i></button>
+            <button class="samir-btn btn-start" id="startBtn" onclick="window.initSamir()">ابدأ المقابلة التجريبية <i class="fas fa-play"></i></button>
+            <button class="samir-btn btn-mic" id="micBtn" onclick="window.toggleMic()">تحدث الآن <i class="fas fa-microphone"></i></button>
         </div>
     </div>
 
@@ -338,7 +338,6 @@
     <script type="module">
         import { GoogleGenAI } from "@google/generative-ai";
 
-        // تم حقن مفتاح الـ API الجديد والنظيف هنا بنجاح
         const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
         
         const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
@@ -388,6 +387,7 @@
             micBtn.classList.remove('listening');
         }
 
+        // جعل الكبسة ترى وظيفة المايكروفون
         window.toggleMic = function() {
             if (!recognition) return;
             if (isListening) {
@@ -420,6 +420,7 @@
             }
         }
 
+        // جعل الكبسة ترى وظيفة بدء التشغيل
         window.initSamir = async function() {
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
@@ -441,7 +442,7 @@
 
             } catch (err) {
                 console.error("Initialization Error: ", err);
-                showSamirText("فشل إعداد المساعد الصوتي. تأكد من صحة مفتاح الـ API الخاص بك.");
+                showSamirText("فشل إعداد المساعد الصوتي. تأكد من اتصال الإنترنت الخاص بك وسهولة استخدام السيرفر.");
             }
         }
 
@@ -457,7 +458,7 @@
 
             } catch (error) {
                 console.error("Gemini SDK Error:", error);
-                showSamirText("عذراً، حدث خطأ أثناء الاتصال. تأكد من أن المفتاح الجديد يعمل بشكل سليم واضغط 'تحدث الآن' للمحاولة.");
+                showSamirText("عذراً، حدث خطأ أثناء الاتصال. اضغط على 'تحدث الآن' وأعد المحاولة.");
             }
         }
     </script>
