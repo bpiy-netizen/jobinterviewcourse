@@ -113,20 +113,12 @@
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-3', event)"><i class="fas fa-check-circle"></i></div>
             </div>
 
-            <div class="section-title">المرحلة الرابعة: التعامل مع الأسئلة الفخ</div>
+            <div class="section-title">المرحلة الرابعة: التدريب الشامل</div>
             <div class="lesson-item" id="job-lesson-4">
-                <div class="lesson-info" onclick="playMedia('ضع_معرف_فيديو_الدرس_الرابع_هنا', '4. الإجابة الذكية على الأسئلة الفخ ومواطن الضعف', 'تكتيكات نفسية ولغوية لتحويل نقاط ضعفك إلى نقاط قوة، وشرح أسباب ترك وظيفتك السابقة بذكاء وبطريقة بيعية احترافية.', 'drive', this.parentElement)">
-                    <i class="fas fa-shield-alt"></i> <span>4. الإجابة على الأسئلة الفخ</span>
+                <div class="lesson-info" onclick="playMedia('1pK6lQwJ-XPFHAGQzma8vNss206X624wu', '4. محاكاة الأسئلة الشائعة والتدريب الصوتي (Podcast Practice)', 'بودكاست تدريبي مكثف يعلمك الإجابة على الأسئلة الكبرى (نقاط القوة، الرواتب، خطط المستقبل) بعبارات إنجليزية بسيطة وقوية لتتحدث بثقة كاملة.', 'drive', this.parentElement)">
+                    <i class="fas fa-graduation-cap"></i> <span>4. محاكاة الأسئلة الشائعة والتدريب الصوتي</span>
                 </div>
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-4', event)"><i class="fas fa-check-circle"></i></div>
-            </div>
-
-            <div class="section-title">المرحلة الخامسة: التدريب الشامل</div>
-            <div class="lesson-item" id="job-lesson-5">
-                <div class="lesson-info" onclick="playMedia('1pK6lQwJ-XPFHAGQzma8vNss206X624wu', '5. محاكاة الأسئلة الشائعة والتدريب الصوتي (Podcast Practice)', 'بودكاست تدريبي مكثف يعلمك الإجابة على الأسئلة الكبرى (نقاط القوة، الرواتب، خطط المستقبل) بعبارات إنجليزية بسيطة وقوية لتتحدث بثقة كاملة.', 'drive', this.parentElement)">
-                    <i class="fas fa-graduation-cap"></i> <span>5. محاكاة الأسئلة الشائعة والتدريب الصوتي</span>
-                </div>
-                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-5', event)"><i class="fas fa-check-circle"></i></div>
             </div>
 
             <div class="section-title">حقيبة التوظيف والمرفقات (PDFs)</div>
@@ -165,7 +157,7 @@
     <script>
         let currentLessonId = 'job-lesson-1';
         let currentVideoType = 'drive';
-        const totalLessonsCount = 5;
+        const totalLessonsCount = 4; // تم تعديل العدد الإجمالي تلقائياً ليحسب شريط التقدم بدقة بناءً على 4 دروس
 
         function checkAccess() {
             if(document.getElementById('passCode').value === '51talk') {
