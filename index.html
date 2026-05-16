@@ -70,16 +70,25 @@
         
         .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
 
-        .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 340px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
-        .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
-        .samir-avatar { width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; position: relative; }
-        .samir-status { width: 10px; height: 10px; background: var(--success); border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid var(--sidebar); }
-        .samir-title { font-weight: bold; font-size: 0.95rem; color: #fff; }
+        /* تعديلات صندوق سمير ليدعم مدخلات الكتابة */
+        .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 350px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
+        .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 12px 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
+        .samir-avatar { width: 38px; height: 38px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; position: relative; }
+        .samir-status { width: 9px; height: 9px; background: var(--success); border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid var(--sidebar); }
+        .samir-title { font-weight: bold; font-size: 0.9rem; color: #fff; }
         .samir-subtitle { font-size: 0.75rem; color: #94a3b8; }
-        .samir-body { padding: 15px; min-height: 100px; max-height: 150px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; background: rgba(0,0,0,0.15); text-align: right; }
-        .samir-controls { padding: 15px; display: flex; justify-content: center; gap: 10px; background: var(--sidebar); }
-        .samir-btn { border: none; padding: 10px 20px; border-radius: 30px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: 0.2s; }
-        .btn-start { background: var(--accent); color: white; }
+        .samir-body { padding: 15px; min-height: 120px; max-height: 160px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; background: rgba(0,0,0,0.2); text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        
+        /* شريط الإدخال الجديد */
+        .samir-input-zone { display: none; background: rgba(0,0,0,0.3); padding: 10px; align-items: center; gap: 8px; border-bottom: 1px solid rgba(0,180,216,0.1); }
+        .samir-input-zone input { flex-grow: 1; background: #0a1128; border: 1px solid rgba(0,180,216,0.3); padding: 8px 12px; border-radius: 20px; color: #fff; outline: none; font-family: 'Cairo', sans-serif; font-size: 0.85rem; text-align: left; direction: ltr; }
+        .samir-input-zone input:focus { border-color: var(--accent); }
+        .samir-input-zone button { background: var(--accent); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; transition: 0.2s; }
+        .samir-input-zone button:hover { background: #0077b6; }
+
+        .samir-controls { padding: 12px; display: flex; justify-content: center; gap: 10px; background: var(--sidebar); }
+        .samir-btn { border: none; padding: 8px 18px; border-radius: 30px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: 0.2s; }
+        .btn-start { background: var(--accent); color: white; width: 100%; justify-content: center; }
         .btn-start:hover { background: #0077b6; }
         .btn-mic { background: var(--success); color: white; display: none; }
         .btn-mic.listening { background: var(--danger); animation: pulse-mic 1.5s infinite; }
@@ -203,12 +212,19 @@
             </div>
             <div>
                 <div class="samir-title">الأستاذ سامر | خبير الـ HR</div>
-                <div class="samir-subtitle">المحاكاة الصوتية التفاعلية للمقابلات</div>
+                <div class="samir-subtitle">المحاكاة الصوتية والكتابية للمقابلات</div>
             </div>
         </div>
+        
         <div class="samir-body" id="samirTextBox">
-            مرحباً بك! اضغط على زر "ابدأ المقابلة التجريبية" لبدء السيناريو الصوتي التفاعلي مع الأستاذ سامر..
+            مرحباً بك! اضغط على زر "ابدأ المقابلة التجريبية" للبدء..
         </div>
+
+        <div class="samir-input-zone" id="inputZone">
+            <input type="text" id="samirInputField" placeholder="Type your answer here in English..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendTextAnswer()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+
         <div class="samir-controls">
             <button class="samir-btn btn-start" id="startBtn" onclick="initSamir()">ابدأ المقابلة التجريبية <i class="fas fa-play"></i></button>
             <button class="samir-btn btn-mic" id="micBtn" onclick="toggleMic()">تحدث الآن <i class="fas fa-microphone"></i></button>
@@ -258,52 +274,28 @@
                 video.pause();
                 iframe.style.display = 'block';
                 iframe.src = `https://drive.google.com/file/d/${source}/preview`;
-                
-                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
-                if (savedTime && parseFloat(savedTime) > 5) {
-                    let mins = Math.floor(savedTime / 60);
-                    let secs = Math.floor(savedTime % 60);
-                    document.getElementById('resumeAlertText').innerText = `توقفت سابقاً عند الدقيقة ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-                    resumeAlert.style.display = 'flex';
-                }
             } else {
                 iframe.style.display = 'none';
                 iframe.src = '';
                 video.style.display = 'block';
                 video.src = source;
                 video.play();
-
-                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
-                if (savedTime) {
-                    video.currentTime = parseFloat(savedTime);
-                }
             }
-            
             localStorage.setItem('job_last_watched', currentLessonId);
         }
-
-        const directVideoPlayer = document.getElementById('directVideo');
-        directVideoPlayer.ontimeupdate = function() {
-            if (currentVideoType === 'cloudinary' && directVideoPlayer.currentTime > 2) {
-                localStorage.setItem('job_time_' + currentLessonId, directVideoPlayer.currentTime);
-            }
-        };
 
         function updateProgressBar() {
             const completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
             const completedLessonsCount = completedList.filter(id => id.startsWith('job-lesson-')).length;
             const percentage = Math.round((completedLessonsCount / totalLessonsCount) * 100);
-            
             document.getElementById('progressBar').style.width = percentage + '%';
             document.getElementById('progressPercent').innerText = percentage + '%';
         }
 
         function toggleLessonCompletion(id, event) {
             if(event) event.stopPropagation(); 
-            
             const el = document.getElementById(id);
             let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
-            
             if (el.classList.contains('completed-item')) {
                 el.classList.remove('completed-item');
                 completedList = completedList.filter(itemId => itemId !== id);
@@ -311,7 +303,6 @@
                 el.classList.add('completed-item');
                 if (!completedList.includes(id)) completedList.push(id);
             }
-            
             localStorage.setItem('job_completed_lessons', JSON.stringify(completedList));
             updateProgressBar();
         }
@@ -322,9 +313,7 @@
                 const el = document.getElementById(id);
                 if (el) el.classList.add('completed-item');
             });
-
             updateProgressBar();
-
             let lastLesson = localStorage.getItem('job_last_watched');
             if (lastLesson) {
                 const el = document.getElementById(lastLesson);
@@ -340,10 +329,7 @@
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 recognition = new SpeechRecognition();
                 recognition.continuous = false;
-                
-                // تفعيل التعرف التلقائي على اللغتين لمنع النصوص الفارغة
                 recognition.lang = 'en-US'; 
-                
                 recognition.interimResults = false;
 
                 recognition.onstart = () => {
@@ -353,29 +339,18 @@
                     micBtn.classList.add('listening');
                 };
 
-                recognition.onerror = (e) => {
-                    console.error("Speech Recognition Error: ", e);
-                    stopMicUI();
-                };
-
-                recognition.onend = () => {
-                    stopMicUI();
-                };
+                recognition.onerror = () => { stopMicUI(); };
+                recognition.onend = () => { stopMicUI(); };
 
                 recognition.onresult = async (event) => {
                     const studentText = event.results[0][0].transcript;
-                    
-                    // صمام أمان: إذا كان النص فارغاً أو لم يُسمع جيداً، نمنع إرساله لمنع انهيار الاتصال
                     if (!studentText || !studentText.trim()) {
-                        showSamirText("⚠️ لم أسمعك جيداً، اضغط على 'تحدث الآن' وأعد الإجابة بصوت واضح.");
+                        showSamirText("⚠️ لم أسمعك جيداً. يمكنك الكتابة في الصندوق بالأسفل إذا استمرت المشكلة.");
                         return;
                     }
-                    
-                    showSamirText(`أنت: ${studentText}`);
+                    showSamirText(`أنت (صوتياً): ${studentText}`);
                     await talkToGemini(studentText);
                 };
-            } else {
-                document.getElementById('samirTextBox').innerText = "متصفحك لا يدعم التعرف الصوتي المباشر، يرجى استخدام متصفح Google Chrome.";
             }
         }
 
@@ -387,13 +362,11 @@
         }
 
         function toggleMic() {
-            if (!recognition) return;
-            if (isListening) {
-                recognition.stop();
-            } else {
-                // محاولة تعيين اللغة مرنة لالتقاط أي نطق بصوت واضح
-                recognition.start();
+            if (!recognition) {
+                showSamirText("⚠️ ميزة الصوت غير مدعومة بالكامل، يرجى الكتابة بالأسفل.");
+                return;
             }
+            if (isListening) { recognition.stop(); } else { recognition.start(); }
         }
 
         function showSamirText(text) {
@@ -405,15 +378,9 @@
         function samirSpeak(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
                 utterance.rate = 0.95;
-                
-                utterance.onend = () => {
-                    setTimeout(() => { toggleMic(); }, 600);
-                };
-
                 window.speechSynthesis.speak(utterance);
             }
         }
@@ -421,9 +388,9 @@
         function initSamir() {
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
+            document.getElementById('inputZone').style.display = 'flex'; // إظهار حقل الكتابة فوراً عند البدء
             
             chatHistory = []; 
-            
             const initialGreeting = "Hello! I am Mr. Samir, your HR interviewer today. Let's start our mock interview. Could you please tell me about yourself?";
             showSamirText(`سامر: ${initialGreeting}`);
             samirSpeak(initialGreeting);
@@ -434,15 +401,25 @@
             });
         }
 
-        async function talkToGemini(studentResponse) {
-            // فحص إضافي أخير للتأكد من سلامة النص المُرسل للسيرفر
-            if(!studentResponse || studentResponse.trim().length === 0) {
-                 showSamirText("⚠️ النص فارغ! اضغط على تحدث الآن وتكلم مرة أخرى.");
-                 return;
-            }
-
-            showSamirText("سامر يفكر... 🧠");
+        // إرسال الإجابة المكتوبة نصياً
+        async function sendTextAnswer() {
+            const inputField = document.getElementById('samirInputField');
+            const answer = inputField.value.trim();
+            if(!answer) return;
             
+            inputField.value = ""; // مسح الحقل
+            showSamirText(`أنت: ${answer}`);
+            await talkToGemini(answer);
+        }
+
+        function handleKeyPress(e) {
+            if(e.key === 'Enter') {
+                sendTextAnswer();
+            }
+        }
+
+        async function talkToGemini(studentResponse) {
+            showSamirText("سامر يفكر... 🧠");
             chatHistory.push({
                 role: "user",
                 parts: [{ text: studentResponse }]
@@ -477,15 +454,14 @@
                         parts: [{ text: samirReply }]
                     });
                 } else {
-                    // إذا أرجع السيرفر رد غير متوقع بسبب جودة المدخلات، نقوم بحذف الدور الأخير لإصلاح الـ History
                     chatHistory.pop();
-                    showSamirText("⚠️ سامر لم يستطع فهم الرد. اضغط 'تحدث الآن' وتحدث بإنجليزية واضحة ومستمرة.");
+                    showSamirText("⚠️ لم أستطع معالجة الرد، يرجى كتابة إجابتك بالإنجليزية في الصندوق بالأسفل.");
                 }
 
             } catch (error) {
                 console.error("Fetch API Error:", error);
-                chatHistory.pop(); // التراجع لمنع تلف الـ History
-                showSamirText("عذراً، حدث خطأ أثناء الاتصال بالخادم. اضغط على 'تحدث الآن' وأعد المحاولة بصوت أعلى.");
+                chatHistory.pop(); 
+                showSamirText("⚠️ حدث خطأ في الشبكة، يرجى المحاولة كتابةً مرة أخرى.");
             }
         }
     </script>
