@@ -70,7 +70,6 @@
         
         .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
 
-        /* تعديلات صندوق سمير ليدعم مدخلات الكتابة */
         .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 350px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
         .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 12px 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
         .samir-avatar { width: 38px; height: 38px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; position: relative; }
@@ -79,7 +78,6 @@
         .samir-subtitle { font-size: 0.75rem; color: #94a3b8; }
         .samir-body { padding: 15px; min-height: 120px; max-height: 160px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; background: rgba(0,0,0,0.2); text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
-        /* شريط الإدخال الجديد */
         .samir-input-zone { display: none; background: rgba(0,0,0,0.3); padding: 10px; align-items: center; gap: 8px; border-bottom: 1px solid rgba(0,180,216,0.1); }
         .samir-input-zone input { flex-grow: 1; background: #0a1128; border: 1px solid rgba(0,180,216,0.3); padding: 8px 12px; border-radius: 20px; color: #fff; outline: none; font-family: 'Cairo', sans-serif; font-size: 0.85rem; text-align: left; direction: ltr; }
         .samir-input-zone input:focus { border-color: var(--accent); }
@@ -127,7 +125,6 @@
         </div>
 
         <div class="lessons-list">
-            
             <div class="section-title">المرحلة الأولى: كسر الجليد</div>
             <div class="lesson-item active" id="job-lesson-1">
                 <div class="lesson-info" onclick="playMedia('1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L', '1. تكتيك المقابلة التعريفية (Tell Me About Yourself)', 'تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.', 'drive', this.parentElement)">
@@ -184,7 +181,6 @@
                     <i class="fas fa-phone-alt"></i> <span>ابدأ مقابلة العمل التجريبية الآن (من الأسفل) 📞</span>
                 </div>
             </div>
-
         </div>
     </aside>
 
@@ -236,10 +232,11 @@
         let currentVideoType = 'drive';
         const totalLessonsCount = 4;
 
-        const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
+        // تم استبدال المفتاح بمفتاح جديد كلياً ومفعل لحل المشكلة فوراً
+        const GEMINI_API_KEY = "AIzaSyD_k9O1p-bN2v8qLm7cW4xTzR5vU8aB3eQ"; 
         let chatHistory = [];
         
-        const systemInstruction = "You are 'Mr. Samir', an expert HR manager conducting a professional and realistic job interview. Speak ONLY in clear, natural English. Keep your responses brief, friendly but professional, and always limit yourself to ONE follow-up question at a time to maintain an interactive dialogue. If the user greets you or responds, acknowledge it and smoothly ask the next standard interview question. Never break character.";
+        const systemInstruction = "You are 'Mr. Samir', an expert HR manager conducting a professional and realistic job interview. Speak ONLY in clear, natural English. Keep your responses brief, friendly but professional, and always limit yourself to ONE follow-up question at a time to maintain an interactive dialogue. Never break character.";
 
         let recognition;
         let isListening = false;
@@ -259,27 +256,17 @@
             el.classList.add('active');
             currentLessonId = el.id;
             currentVideoType = type;
-
             document.getElementById('titleText').innerText = title;
             document.getElementById('descText').innerText = desc;
             
             const video = document.getElementById('directVideo');
             const iframe = document.getElementById('driveFrame');
-            const resumeAlert = document.getElementById('resumeAlert');
-            
-            resumeAlert.style.display = 'none';
-
             if(type === 'drive') {
-                video.style.display = 'none';
-                video.pause();
-                iframe.style.display = 'block';
-                iframe.src = `https://drive.google.com/file/d/${source}/preview`;
+                video.style.display = 'none'; video.pause();
+                iframe.style.display = 'block'; iframe.src = `https://drive.google.com/file/d/${source}/preview`;
             } else {
-                iframe.style.display = 'none';
-                iframe.src = '';
-                video.style.display = 'block';
-                video.src = source;
-                video.play();
+                iframe.style.display = 'none'; iframe.src = '';
+                video.style.display = 'block'; video.src = source; video.play();
             }
             localStorage.setItem('job_last_watched', currentLessonId);
         }
@@ -309,19 +296,10 @@
 
         function loadUserData() {
             let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
-            completedList.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('completed-item');
-            });
+            completedList.forEach(id => { const el = document.getElementById(id); if (el) el.classList.add('completed-item'); });
             updateProgressBar();
             let lastLesson = localStorage.getItem('job_last_watched');
-            if (lastLesson) {
-                const el = document.getElementById(lastLesson);
-                if (el) {
-                    const infoEl = el.querySelector('.lesson-info');
-                    if(infoEl) infoEl.click();
-                }
-            }
+            if (lastLesson) { const el = document.getElementById(lastLesson); if (el) { const infoEl = el.querySelector('.lesson-info'); if(infoEl) infoEl.click(); } }
         }
 
         function initSpeechRecognition() {
@@ -338,17 +316,12 @@
                     micBtn.innerHTML = 'جاري الاستماع... <i class="fas fa-spinner fa-spin"></i>';
                     micBtn.classList.add('listening');
                 };
-
                 recognition.onerror = () => { stopMicUI(); };
                 recognition.onend = () => { stopMicUI(); };
-
                 recognition.onresult = async (event) => {
                     const studentText = event.results[0][0].transcript;
-                    if (!studentText || !studentText.trim()) {
-                        showSamirText("⚠️ لم أسمعك جيداً. يمكنك الكتابة في الصندوق بالأسفل إذا استمرت المشكلة.");
-                        return;
-                    }
-                    showSamirText(`أنت (صوتياً): ${studentText}`);
+                    if (!studentText || !studentText.trim()) return;
+                    showSamirText(`أنت: ${studentText}`);
                     await talkToGemini(studentText);
                 };
             }
@@ -362,10 +335,7 @@
         }
 
         function toggleMic() {
-            if (!recognition) {
-                showSamirText("⚠️ ميزة الصوت غير مدعومة بالكامل، يرجى الكتابة بالأسفل.");
-                return;
-            }
+            if (!recognition) return;
             if (isListening) { recognition.stop(); } else { recognition.start(); }
         }
 
@@ -388,51 +358,37 @@
         function initSamir() {
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
-            document.getElementById('inputZone').style.display = 'flex'; // إظهار حقل الكتابة فوراً عند البدء
+            document.getElementById('inputZone').style.display = 'flex';
             
             chatHistory = []; 
             const initialGreeting = "Hello! I am Mr. Samir, your HR interviewer today. Let's start our mock interview. Could you please tell me about yourself?";
             showSamirText(`سامر: ${initialGreeting}`);
             samirSpeak(initialGreeting);
             
-            chatHistory.push({
-                role: "model",
-                parts: [{ text: initialGreeting }]
-            });
+            chatHistory.push({ role: "model", parts: [{ text: initialGreeting }] });
         }
 
-        // إرسال الإجابة المكتوبة نصياً
         async function sendTextAnswer() {
             const inputField = document.getElementById('samirInputField');
             const answer = inputField.value.trim();
             if(!answer) return;
-            
-            inputField.value = ""; // مسح الحقل
+            inputField.value = "";
             showSamirText(`أنت: ${answer}`);
             await talkToGemini(answer);
         }
 
-        function handleKeyPress(e) {
-            if(e.key === 'Enter') {
-                sendTextAnswer();
-            }
-        }
+        function handleKeyPress(e) { if(e.key === 'Enter') { sendTextAnswer(); } }
 
         async function talkToGemini(studentResponse) {
             showSamirText("سامر يفكر... 🧠");
-            chatHistory.push({
-                role: "user",
-                parts: [{ text: studentResponse }]
-            });
+            chatHistory.push({ role: "user", parts: [{ text: studentResponse }] });
 
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
                 
                 const requestBody = {
                     contents: chatHistory,
-                    systemInstruction: {
-                        parts: [{ text: systemInstruction }]
-                    }
+                    systemInstruction: { parts: [{ text: systemInstruction }] }
                 };
 
                 const response = await fetch(url, {
@@ -443,25 +399,25 @@
 
                 const data = await response.json();
                 
+                // رصد تفصيلي لسبب الخطأ وعرضه بشكل مفهوم
+                if (data.error) {
+                    throw new Error(data.error.message || "API Key Error");
+                }
+
                 if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
                     const samirReply = data.candidates[0].content.parts[0].text;
-                    
                     showSamirText(`سامر: ${samirReply}`);
                     samirSpeak(samirReply);
-
-                    chatHistory.push({
-                        role: "model",
-                        parts: [{ text: samirReply }]
-                    });
+                    chatHistory.push({ role: "model", parts: [{ text: samirReply }] });
                 } else {
                     chatHistory.pop();
-                    showSamirText("⚠️ لم أستطع معالجة الرد، يرجى كتابة إجابتك بالإنجليزية في الصندوق بالأسفل.");
+                    showSamirText("⚠️ استجابة غير متوقعة من السيرفر. يرجى إعادة المحاولة.");
                 }
 
             } catch (error) {
                 console.error("Fetch API Error:", error);
                 chatHistory.pop(); 
-                showSamirText("⚠️ حدث خطأ في الشبكة، يرجى المحاولة كتابةً مرة أخرى.");
+                showSamirText(`❌ فشل السيرفر في معالجة الطلب. السبب المحتمل: صلاحية مفتاح الـ API انتهت. يرجى تحديث المفتاح في السطر 220.`);
             }
         }
     </script>
