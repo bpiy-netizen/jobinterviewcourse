@@ -3,287 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>أكاديمية تكتيكات مقابلات العمل | Job Interview Academy</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>دليل رسائل الشكر ومحاكي المقابلات - 51Talk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
-        :root { 
-            --bg: #0a1128; 
-            --sidebar: #101f42; 
-            --accent: #00b4d8; 
-            --text: #e2e8f0; 
-            --success: #10b981;
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
         }
-        body { margin: 0; font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; }
-        
-        #lock-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .login-box { background: var(--sidebar); padding: 40px; border-radius: 20px; border: 1px solid var(--accent); text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .login-box input { padding: 12px; border-radius: 8px; border: none; width: 220px; text-align: center; margin-bottom: 15px; outline: none; font-family: 'Cairo', sans-serif; font-size: 1rem; }
-        .login-box button { background: var(--accent); color: white; border: none; padding: 10px 30px; border-radius: 8px; cursor: pointer; font-weight: bold; font-family: 'Cairo', sans-serif; transition: 0.3s; }
-        .login-box button:hover { background: #0077b6; }
-
-        .sidebar { width: 350px; background: var(--sidebar); border-left: 1px solid rgba(0,180,216,0.2); display: flex; flex-direction: column; }
-        .sidebar-header { padding: 25px 25px 15px 25px; text-align: center; border-bottom: 1px solid rgba(0,180,216,0.1); }
-        .sidebar-header img { max-width: 160px; height: auto; }
-        
-        .progress-box { padding: 15px 20px; background: rgba(0,180,216,0.05); margin: 0; border-bottom: 1px solid rgba(0,180,216,0.15); font-size: 0.85rem; }
-        .progress-text-container { display: flex; justify-content: space-between; margin-bottom: 8px; color: var(--text); }
-        .progress-bar-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .progress-bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent), #90e0ef); transition: width 0.4s ease; border-radius: 10px; }
-
-        .lessons-list { flex-grow: 1; overflow-y: auto; padding: 15px; }
-        
-        .section-title { font-size: 0.9rem; color: var(--accent); font-weight: bold; margin: 15px 5px 5px 5px; padding-bottom: 5px; border-bottom: 1px solid rgba(0,180,216,0.1); }
-        .lesson-item { background: rgba(255,255,255,0.02); padding: 12px 15px; border-radius: 12px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: 0.3s; font-size: 0.95rem; }
-        .lesson-item .lesson-info { display: flex; align-items: center; gap: 12px; flex-grow: 1; }
-        .lesson-item.active { background: var(--accent); color: white; font-weight: bold; }
-        .lesson-item i { font-size: 1.1rem; }
-        
-        .pdf-item { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); color: #34d399; text-decoration: none; }
-        .pdf-item:hover { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; transform: translateY(-1px); }
-        .pdf-item i.fa-file-pdf { color: var(--success); font-size: 1.2rem; }
-        .pdf-item i.fa-external-link-alt { font-size: 0.85rem; opacity: 0.7; }
-
-        .completion-btn-zone { padding: 5px; cursor: pointer; color: rgba(255,255,255,0.2); transition: 0.2s; }
-        .completion-btn-zone:hover { color: var(--success); }
-        .lesson-item.completed-item .completion-btn-zone { color: var(--success); }
-        .lesson-item.active .completion-btn-zone { color: rgba(255,255,255,0.4); }
-        .lesson-item.active.completed-item .completion-btn-zone { color: white; }
-
-        .main-content { flex-grow: 1; display: flex; flex-direction: column; background: #020617; }
-        .video-container { width: 100%; aspect-ratio: 16/9; background: #000; position: relative; }
-        iframe, video { width: 100%; height: 100%; border: none; position: absolute; top: 0; left: 0; }
-        
-        .details { padding: 30px; background: #070a13; border-top: 1px solid rgba(0,180,216,0.1); flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
-        .details-text h1 { color: var(--accent); margin: 0; font-size: 1.8rem; }
-        .details-text p { margin-top: 10px; color: #94a3b8; line-height: 1.7; font-size: 1.05rem; }
-        
-        .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
-
-        @media (max-width: 1000px) { body { flex-direction: column; overflow: auto; } .sidebar { width: 100%; } }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col justify-between">
 
-    <div id="lock-screen">
-        <div class="login-box">
-            <h2 style="color:var(--accent)">دخول منصة تكتيكات المقابلات</h2>
-            <input type="password" id="passCode" placeholder="أدخل رمز الدخول">
-            <br>
-            <button onclick="checkAccess()">دخول المنصة</button>
+    <header class="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl font-bold text-blue-600">51Talk</span>
+                <span class="text-gray-300">|</span>
+                <span class="text-sm font-medium text-gray-500">أكاديمية تكتيكات مقابلات العمل</span>
+            </div>
+            <span class="bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full border border-blue-100">
+                برنامج التدريب المكثف
+            </span>
         </div>
-    </div>
+    </header>
 
-    <aside class="sidebar">
-        <div class="sidebar-header"><img src="https://res.cloudinary.com/dr3i6fqai/image/upload/v1778799805/logo_anelqt.png"></div>
+    <main class="max-w-4xl mx-auto px-4 py-10 flex-grow w-full">
         
-        <div class="progress-box">
-            <div class="progress-text-container">
-                <span>جاهزيتك لمقابلة العمل</span>
-                <span id="progressPercent">0%</span>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progressBar"></div>
-            </div>
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-4">
+                دليل صياغة رسائل الشكر بعد المقابلة
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                خطوتك الذكية لترك انطباع لا يُنسى لدى مسؤولي التوظيف وتعزيز فرص قبولك.
+            </p>
         </div>
 
-        <div class="lessons-list">
+        <section class="space-y-8">
             
-            <div class="section-title">المرحلة الأولى: كسر الجليد</div>
-            <div class="lesson-item active" id="job-lesson-1">
-                <div class="lesson-info" onclick="playMedia('1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L', '1. تكتيك المقابلة التعريفية (Tell Me About Yourself)', 'تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.', 'drive', this.parentElement)">
-                    <i class="fas fa-user-tie"></i> <span>1. تكتيك المقابلة التعريفية</span>
-                </div>
-                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-1', event)"><i class="fas fa-check-circle"></i></div>
-            </div>
-            
-            <div class="section-title">المرحلة الثانية: الاستراتيجيات السلوكية</div>
-            <div class="lesson-item" id="job-lesson-2">
-                <div class="lesson-info" onclick="playMedia('1T_razDpIHTI0eVbzDLg-kDy52z9r1a6Q', '2. تفكيك الأسئلة السلوكية وتكنيك STAR الاحترافي', 'كيف تجيب على أسئلة المواقف الصعبة والتحديات السابقة باستخدام هيكل (Situation, Task, Action, Result) الأكاديمي.', 'drive', this.parentElement)">
-                    <i class="fas fa-brain"></i> <span>2. تفكيك الأسئلة السلوكية (STAR)</span>
-                </div>
-                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-2', event)"><i class="fas fa-check-circle"></i></div>
-            </div>
-
-            <div class="section-title">المرحلة الثالثة: لغة الجسد والثقة الشخصية</div>
-            <div class="lesson-item" id="job-lesson-3">
-                <div class="lesson-info" onclick="playMedia('1UH6uRfp5jgAt2oQFHuLbtr3KwL81DLun', '3. أسرار لغة الجسد ونبرة الصوت للمقابلات', 'قواعد بصرية ونفسية هامة لتبدو واثقاً كالمتحدثين الأصليين أمام اللجان العالمية والمحلية الكبرى.', 'drive', this.parentElement)">
-                    <i class="fas fa-comments"></i> 
-                    <div style="display: flex; flex-direction: column;">
-                        <span>3. أسرار لغة الجسد ونبرة الصوت</span>
-                        <span style="color: #34d399; font-size: 0.75rem; margin-top: 2px; font-weight: bold;">(متوفر ترجمة عربية تلقائية ⚙️)</span>
+            <div class="bg-amber-50 border-r-4 border-amber-500 p-4 rounded-l-xl shadow-sm">
+                <div class="flex items-start gap-3">
+                    <span class="text-xl mt-0.5">💡</span>
+                    <div>
+                        <h4 class="font-bold text-amber-900 mb-1">توقيت إرسال الرسالة:</h4>
+                        <p class="text-sm text-amber-800 leading-relaxed">
+                            يُفضل دائماً إرسال رسالة الشكر عبر البريد الإلكتروني خلال 24 ساعة من انتهاء المقابلة الرسمية لتظل حاضراً في أذهان لجنة التقييم.
+                        </p>
                     </div>
                 </div>
-                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-3', event)"><i class="fas fa-check-circle"></i></div>
             </div>
 
-            <div class="section-title">المرحلة الرابعة: التدريب الشامل</div>
-            <div class="lesson-item" id="job-lesson-4">
-                <div class="lesson-info" onclick="playMedia('1pK6lQwJ-XPFHAGQzma8vNss206X624wu', '4. محاكاة الأسئلة الشائعة والتدريب الصوتي (Podcast Practice)', 'بودكاست تدريبي مكثف يعلمك الإجابة على الأسئلة الكبرى (نقاط القوة، الرواتب، خطط المستقبل) بعبارات إنجليزية بسيطة وقوية لتتحدث بثقة كاملة.', 'drive', this.parentElement)">
-                    <i class="fas fa-graduation-cap"></i> <span>4. محاكاة الأسئلة الشائعة والتدريب الصوتي</span>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                    <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                        <span class="text-blue-600">✉️</span> النموذج الأول: الرسالة القياسية الاحترافية
+                    </h3>
+                    <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md font-medium">البريد الإلكتروني</span>
                 </div>
-                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-4', event)"><i class="fas fa-check-circle"></i></div>
-            </div>
-
-            <div class="section-title">حقيبة التوظيف والمرفقات (PDFs)</div>
-            <a href="https://drive.google.com/file/d/1O0FsiZ2UQCLqUN14ltkXh8JP0am4DFuC/view?usp=sharing" target="_blank" class="lesson-item pdf-item">
-                <div class="lesson-info">
-                    <i class="fas fa-file-pdf"></i> <span>دليل المصطلحات المفتاحية في مقابلات العمل</span>
-                </div>
-                <i class="fas fa-external-link-alt"></i>
-            </a>
-            <a href="https://drive.google.com/file/d/1dyHBE0VJMucU4KFGpI7NG6gXqjOPvt3B/view?usp=sharing" target="_blank" class="lesson-item pdf-item">
-                <div class="lesson-info">
-                    <i class="fas fa-file-pdf"></i> <span>دليل رسائل الشكر ومتابعة الطلب بعد المقابلة</span>
-                </div>
-                <i class="fas fa-external-link-alt"></i>
-            </a>
-
-        </div>
-    </aside>
-
-    <main class="main-content">
-        <div class="video-container" id="playerWrapper">
-            <iframe id="driveFrame" src="https://drive.google.com/file/d/1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L/preview" allow="autoplay" allowfullscreen></iframe>
-            <video id="directVideo" controls autoplay style="display:none;"></video>
-        </div>
-        <div class="details">
-            <div class="details-text">
-                <h1 id="titleText">1. تكتيك المقابلة التعريفية (Tell Me About Yourself)</h1>
-                <p id="descText" style="margin-top: 15px;">تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.</p>
-                <div class="resume-alert" id="resumeAlert">
-                    <i class="fas fa-history"></i> <span id="resumeAlertText">توقفت سابقاً عند الدقيقة 0:00</span>
+                <div class="bg-gray-900 text-gray-100 p-5 rounded-xl font-mono text-sm leading-relaxed text-left dir-ltr overflow-x-auto">
+                    <p class="font-bold text-blue-400">Subject: Thank you for the interview - [Your Name]</p>
+                    <br>
+                    <p>Dear [Interviewer Name],</p>
+                    <br>
+                    <p>Thank you for taking the time to speak with me today regarding the [Job Title] position. I truly enjoyed learning more about the team and the exciting projects ahead at your company.</p>
+                    <p>This interview further confirmed my enthusiasm for the role and my confidence that my skills align perfectly with your requirements. Please let me know if you need any additional information.</p>
+                    <br>
+                    <p>Best regards,</p>
+                    <p class="text-gray-400">[Your Name]</p>
                 </div>
             </div>
-        </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-4 border-b border-gray-100 pb-3">
+                    <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                        <span class="text-indigo-600">⚙️</span> النموذج الثاني: للمقابلات المتخصصة والتقنية
+                    </h3>
+                    <span class="text-xs bg-gray-100 text-gray-600 px-2.5 py-1 rounded-md font-medium">البريد الإلكتروني</span>
+                </div>
+                <div class="bg-gray-900 text-gray-100 p-5 rounded-xl font-mono text-sm leading-relaxed text-left dir-ltr overflow-x-auto">
+                    <p class="font-bold text-indigo-400">Subject: Technical Interview Follow-Up - [Your Name]</p>
+                    <br>
+                    <p>Dear [Interviewer Name],</p>
+                    <br>
+                    <p>Thank you for the insightful technical discussion today. I really enjoyed walking through the challenges faced by your team and brainstorming potential solutions.</p>
+                    <p>Our conversation made me even more excited about the prospect of bringing my analytical skills and dedication to your organization. I look forward to hearing about the next steps.</p>
+                    <br>
+                    <p>Sincerely,</p>
+                    <p class="text-gray-400">[Your Name]</p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="mt-14">
+            <div class="p-8 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl shadow-xl text-center text-white border border-blue-500 max-w-2xl mx-auto transition-transform transform hover:scale-[1.01]">
+                <div class="flex justify-center mb-4">
+                    <div class="bg-white/10 p-3 rounded-full backdrop-blur-sm animate-bounce">
+                        <span class="text-4xl">🚀</span>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-bold mb-3">الخطوة الأخيرة والأهم لتميزك!</h3>
+                <p class="text-base text-blue-100 mb-6 leading-relaxed max-w-md mx-auto">
+                    بعد أن تعلمت كيفية صياغة رسائل الشكر الاحترافية، حان الوقت لتضع مهاراتك قيد الاختبار الحقيقي. تحدث الآن مع <span class="font-bold underline decoration-yellow-400 underline-offset-4">الأستاذ سامر (المحاكي الصوتي للـ HR)</span> واكسر حاجز الخوف!
+                </p>
+                <button onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});" class="bg-yellow-400 hover:bg-yellow-300 text-blue-900 font-extrabold py-3.5 px-8 rounded-xl transition duration-300 shadow-lg transform hover:scale-105 inline-flex items-center gap-3">
+                    <span>ابدأ مقابلة العمل التجريبية الآن</span>
+                    <span class="text-xl">📞</span>
+                </button>
+            </div>
+        </section>
+
     </main>
 
-    <script>
-        let currentLessonId = 'job-lesson-1';
-        let currentVideoType = 'drive';
-        const totalLessonsCount = 4;
-
-        function checkAccess() {
-            if(document.getElementById('passCode').value === '51talk') {
-                document.getElementById('lock-screen').style.display = 'none';
-                loadUserData();
-            } else {
-                alert('الرمز خطأ!');
-            }
-        }
-
-        function playMedia(source, title, desc, type, el) {
-            document.querySelectorAll('.lesson-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            currentLessonId = el.id;
-            currentVideoType = type;
-
-            document.getElementById('titleText').innerText = title;
-            document.getElementById('descText').innerText = desc;
-            
-            const video = document.getElementById('directVideo');
-            const iframe = document.getElementById('driveFrame');
-            const resumeAlert = document.getElementById('resumeAlert');
-            
-            resumeAlert.style.display = 'none';
-
-            if(type === 'drive') {
-                video.style.display = 'none';
-                video.pause();
-                iframe.style.display = 'block';
-                iframe.src = `https://drive.google.com/file/d/${source}/preview`;
-                
-                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
-                if (savedTime && parseFloat(savedTime) > 5) {
-                    let mins = Math.floor(savedTime / 60);
-                    let secs = Math.floor(savedTime % 60);
-                    document.getElementById('resumeAlertText').innerText = `توقفت سابقاً عند الدقيقة ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-                    resumeAlert.style.display = 'flex';
-                }
-            } else {
-                iframe.style.display = 'none';
-                iframe.src = '';
-                video.style.display = 'block';
-                video.src = source;
-                video.play();
-
-                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
-                if (savedTime) {
-                    video.currentTime = parseFloat(savedTime);
-                }
-            }
-            
-            localStorage.setItem('job_last_watched', currentLessonId);
-        }
-
-        const directVideoPlayer = document.getElementById('directVideo');
-        directVideoPlayer.ontimeupdate = function() {
-            if (currentVideoType === 'cloudinary' && directVideoPlayer.currentTime > 2) {
-                localStorage.setItem('job_time_' + currentLessonId, directVideoPlayer.currentTime);
-            }
-        };
-
-        function updateProgressBar() {
-            const completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
-            const completedLessonsCount = completedList.filter(id => id.startsWith('job-lesson-')).length;
-            const percentage = Math.round((completedLessonsCount / totalLessonsCount) * 100);
-            
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('progressPercent').innerText = percentage + '%';
-        }
-
-        function toggleLessonCompletion(id, event) {
-            if(event) event.stopPropagation(); 
-            
-            const el = document.getElementById(id);
-            let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
-            
-            if (el.classList.contains('completed-item')) {
-                el.classList.remove('completed-item');
-                completedList = completedList.filter(itemId => itemId !== id);
-            } else {
-                el.classList.add('completed-item');
-                if (!completedList.includes(id)) completedList.push(id);
-            }
-            
-            localStorage.setItem('job_completed_lessons', JSON.stringify(completedList));
-            updateProgressBar();
-        }
-
-        function loadUserData() {
-            let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
-            completedList.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('completed-item');
-            });
-
-            updateProgressBar();
-
-            let lastLesson = localStorage.getItem('job_last_watched');
-            if (lastLesson) {
-                const el = document.getElementById(lastLesson);
-                if (el) {
-                    const infoEl = el.querySelector('.lesson-info');
-                    if(infoEl) infoEl.click();
-                }
-            }
-        }
-    </script>
+    <footer class="bg-gray-900 text-gray-400 py-6 border-t border-gray-800 text-center text-sm w-full mt-20">
+        <p>© 2026 جميع الحقوق محفوظة لمنصة 51Talk التعليمية لدعم الطلاب.</p>
+    </footer>
 
     <script type="text/javascript">
       (function(d, t) {
           var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
           v.onload = function() {
             window.voiceflow.chat.load({
-              verify: { projectID: '6a07bcf25febbe48f6148139' },
+              verify: { projectId: '6a07bcf25febbe48f6148139' },
               url: 'https://general-runtime.voiceflow.com',
+              versionID: 'production',
               voice: {
-                url: "https://runtime-api.voiceflow.com"
+                url: 'https://runtime-api.voiceflow.com'
               }
             });
           }
-          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+          v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript";
+          s.parentNode.insertBefore(v, s);
       })(document, 'script');
     </script>
+
 </body>
 </html>
