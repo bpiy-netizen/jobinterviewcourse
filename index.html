@@ -40,6 +40,20 @@
         .lesson-item.active { background: var(--accent); color: white; font-weight: bold; }
         .lesson-item i { font-size: 1.1rem; }
         
+        .pdf-item { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.15); color: #34d399; text-decoration: none; }
+        .pdf-item:hover { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; transform: translateY(-1px); }
+        .pdf-item i.fa-file-pdf { color: var(--success); font-size: 1.2rem; }
+        .pdf-item i.fa-external-link-alt { font-size: 0.85rem; opacity: 0.7; }
+
+        .interview-notice-item { background: linear-gradient(135deg, rgba(0, 180, 216, 0.15), rgba(16, 31, 66, 0.4)); border: 1px solid rgba(0, 180, 216, 0.4); color: #90e0ef; font-weight: bold; }
+        .interview-notice-item i.fa-phone-alt { color: var(--accent); animation: pulse-icon 1.8s infinite; }
+
+        @keyframes pulse-icon {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         .completion-btn-zone { padding: 5px; cursor: pointer; color: rgba(255,255,255,0.2); transition: 0.2s; }
         .completion-btn-zone:hover { color: var(--success); }
         .lesson-item.completed-item .completion-btn-zone { color: var(--success); }
@@ -53,24 +67,30 @@
         .details { padding: 30px; background: #070a13; border-top: 1px solid rgba(0,180,216,0.1); flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
         .details-text h1 { color: var(--accent); margin: 0; font-size: 1.8rem; }
         .details-text p { margin-top: 10px; color: #94a3b8; line-height: 1.7; font-size: 1.05rem; }
-
-        .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 350px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
-        .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 12px 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
-        .samir-avatar { width: 38px; height: 38px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; position: relative; }
-        .samir-status { width: 9px; height: 9px; background: var(--success); border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid var(--sidebar); }
-        .samir-title { font-weight: bold; font-size: 0.9rem; color: #fff; }
-        .samir-subtitle { font-size: 0.75rem; color: #94a3b8; }
-        .samir-body { padding: 15px; min-height: 120px; max-height: 160px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; background: rgba(0,0,0,0.2); text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
-        .samir-input-zone { display: none; background: rgba(0,0,0,0.3); padding: 10px; align-items: center; gap: 8px; border-bottom: 1px solid rgba(0,180,216,0.1); }
-        .samir-input-zone input { flex-grow: 1; background: #0a1128; border: 1px solid rgba(0,180,216,0.3); padding: 8px 12px; border-radius: 20px; color: #fff; outline: none; font-family: 'Cairo', sans-serif; font-size: 0.85rem; text-align: left; direction: ltr; }
-        .samir-input-zone button { background: var(--accent); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; transition: 0.2s; }
+        .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
 
-        .samir-controls { padding: 12px; display: flex; justify-content: center; gap: 10px; background: var(--sidebar); }
-        .samir-btn { border: none; padding: 8px 18px; border-radius: 30px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: 0.2s; }
-        .btn-start { background: var(--accent); color: white; width: 100%; justify-content: center; }
+        .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 340px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
+        .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
+        .samir-avatar { width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; position: relative; }
+        .samir-status { width: 10px; height: 10px; background: var(--success); border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid var(--sidebar); }
+        .samir-title { font-weight: bold; font-size: 0.95rem; color: #fff; }
+        .samir-subtitle { font-size: 0.75rem; color: #94a3b8; }
+        .samir-body { padding: 15px; min-height: 100px; max-height: 150px; overflow-y: auto; font-size: 0.9rem; line-height: 1.6; color: #e2e8f0; background: rgba(0,0,0,0.15); text-align: right; }
+        .samir-controls { padding: 15px; display: flex; justify-content: center; gap: 10px; background: var(--sidebar); }
+        .samir-btn { border: none; padding: 10px 20px; border-radius: 30px; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; transition: 0.2s; }
+        .btn-start { background: var(--accent); color: white; }
+        .btn-start:hover { background: #0077b6; }
         .btn-mic { background: var(--success); color: white; display: none; }
-        .btn-mic.listening { background: var(--danger); }
+        .btn-mic.listening { background: var(--danger); animation: pulse-mic 1.5s infinite; }
+        
+        @keyframes pulse-mic {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        @media (max-width: 1000px) { body { flex-direction: column; overflow: auto; } .sidebar { width: 100%; } .samir-widget { width: calc(100% - 40px); left: 20px; bottom: 10px; } }
     </style>
 </head>
 <body>
@@ -86,49 +106,109 @@
 
     <aside class="sidebar">
         <div class="sidebar-header"><img src="https://res.cloudinary.com/dr3i6fqai/image/upload/v1778799805/logo_anelqt.png"></div>
+        
         <div class="progress-box">
-            <div class="progress-text-container"><span>جاهزيتك لمقابلة العمل</span><span id="progressPercent">0%</span></div>
-            <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+            <div class="progress-text-container">
+                <span>جاهزيتك لمقابلة العمل</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBar"></div>
+            </div>
         </div>
+
         <div class="lessons-list">
+            
             <div class="section-title">المرحلة الأولى: كسر الجليد</div>
             <div class="lesson-item active" id="job-lesson-1">
-                <div class="lesson-info" onclick="playMedia('1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L', '1. تكتيك المقابلة التعريفية', 'تعلم الأسلوب الاحترافي لتقديم نفسك...', 'drive', this.parentElement)">
+                <div class="lesson-info" onclick="playMedia('1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L', '1. تكتيك المقابلة التعريفية (Tell Me About Yourself)', 'تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.', 'drive', this.parentElement)">
                     <i class="fas fa-user-tie"></i> <span>1. تكتيك المقابلة التعريفية</span>
                 </div>
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-1', event)"><i class="fas fa-check-circle"></i></div>
             </div>
+            
+            <div class="section-title">المرحلة الثانية: الاستراتيجيات السلوكية</div>
+            <div class="lesson-item" id="job-lesson-2">
+                <div class="lesson-info" onclick="playMedia('1T_razDpIHTI0eVbzDLg-kDy52z9r1a6Q', '2. تفكيك الأسئلة السلوكية وتكنيك STAR الاحترافي', 'كيف تجيب على أسئلة المواقف الصعبة والتحديات السابقة باستخدام هيكل (Situation, Task, Action, Result) الأكاديمي.', 'drive', this.parentElement)">
+                    <i class="fas fa-brain"></i> <span>2. تفكيك الأسئلة السلوكية (STAR)</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-2', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">المرحلة الثالثة: لغة الجسد والثقة الشخصية</div>
+            <div class="lesson-item" id="job-lesson-3">
+                <div class="lesson-info" onclick="playMedia('1UH6uRfp5jgAt2oQFHuLbtr3KwL81DLun', '3. أسرار لغة الجسد ونبرة الصوت للمقابلات', 'قواعد بصرية ونفسية هامة لتبدو واثقاً كالمتحدثين الأصليين أمام اللجان العالمية والمحلية الكبرى.', 'drive', this.parentElement)">
+                    <i class="fas fa-comments"></i> 
+                    <div style="display: flex; flex-direction: column;">
+                        <span>3. أسرار لغة الجسد ونبرة الصوت</span>
+                        <span style="color: #34d399; font-size: 0.75rem; margin-top: 2px; font-weight: bold;">(متوفر ترجمة عربية تلقائية ⚙️)</span>
+                    </div>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-3', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">المرحلة الرابعة: التدريب الشامل</div>
+            <div class="lesson-item" id="job-lesson-4">
+                <div class="lesson-info" onclick="playMedia('1pK6lQwJ-XPFHAGQzma8vNss206X624wu', '4. محاكاة الأسئلة الشائعة والتدريب الصوتي (Podcast Practice)', 'بودكاست تدريبي مكثف يعلمك الإجابة على الأسئلة الكبرى (نقاط القوة، الرواتب، خطط المستقبل) بعبارات إنجليزية بسيطة وقوية لتتحدث بثقة كاملة.', 'drive', this.parentElement)">
+                    <i class="fas fa-graduation-cap"></i> <span>4. محاكاة الأسئلة الشائعة والتدريب الصوتي</span>
+                </div>
+                <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-4', event)"><i class="fas fa-check-circle"></i></div>
+            </div>
+
+            <div class="section-title">حقيبة التوظيف والمرفقات (PDFs)</div>
+            <a href="https://drive.google.com/file/d/1O0FsiZ2UQCLqUN14ltkXh8JP0am4DFuC/view?usp=sharing" target="_blank" class="lesson-item pdf-item">
+                <div class="lesson-info">
+                    <i class="fas fa-file-pdf"></i> <span>دليل المصطلحات المفتاحية في مقابلات العمل</span>
+                </div>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+            <a href="https://drive.google.com/file/d/1dyHBE0VJMucU4KFGpI7NG6gXqjOPvt3B/view?usp=sharing" target="_blank" class="lesson-item pdf-item">
+                <div class="lesson-info">
+                    <i class="fas fa-file-pdf"></i> <span>دليل رسائل الشكر ومتابعة الطلب بعد المقابلة</span>
+                </div>
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+
+            <div class="section-title">المرحلة الخامسة: التقييم والمحاكاة</div>
+            <div class="lesson-item interview-notice-item">
+                <div class="lesson-info">
+                    <i class="fas fa-phone-alt"></i> <span>ابدأ مقابلة العمل التجريبية الآن (من الأسفل) 📞</span>
+                </div>
+            </div>
+
         </div>
     </aside>
 
     <main class="main-content">
         <div class="video-container" id="playerWrapper">
-            <iframe id="driveFrame" src="https://drive.google.com/file/d/1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L/preview" allowfullscreen></iframe>
+            <iframe id="driveFrame" src="https://drive.google.com/file/d/1uLibKKZNJbl4LiHk_7pSSywnx-Zx1Q2L/preview" allow="autoplay" allowfullscreen></iframe>
+            <video id="directVideo" controls autoplay style="display:none;"></video>
         </div>
         <div class="details">
             <div class="details-text">
-                <h1 id="titleText">1. تكتيك المقابلة التعريفية</h1>
-                <p id="descText">تعلم الأسلوب الاحترافي لتقديم نفسك...</p>
+                <h1 id="titleText">1. تكتيك المقابلة التعريفية (Tell Me About Yourself)</h1>
+                <p id="descText" style="margin-top: 15px;">تعلم الأسلوب الاحترافي لتقديم نفسك وخبراتك السابقة في أول 5 دقائق للمقاوِل بذكاء وثقة.</p>
+                <div class="resume-alert" id="resumeAlert">
+                    <i class="fas fa-history"></i> <span id="resumeAlertText">توقفت سابقاً عند الدقيقة 0:00</span>
+                </div>
             </div>
         </div>
     </main>
 
     <div class="samir-widget">
         <div class="samir-header">
-            <div class="samir-avatar"><i class="fas fa-user-tie"></i><div class="samir-status"></div></div>
+            <div class="samir-avatar">
+                <i class="fas fa-user-tie"></i>
+                <div class="samir-status"></div>
+            </div>
             <div>
                 <div class="samir-title">الأستاذ سامر | خبير الـ HR</div>
-                <div class="samir-subtitle">اتصال مستقر وآمن 🔒</div>
+                <div class="samir-subtitle">المحاكاة الصوتية التفاعلية للمقابلات</div>
             </div>
         </div>
-        
-        <div class="samir-body" id="samirTextBox">مرحباً بك! اضغط على زر "ابدأ المقابلة التجريبية" للبدء..</div>
-
-        <div class="samir-input-zone" id="inputZone">
-            <input type="text" id="samirInputField" placeholder="Type your answer here in English..." onkeypress="handleKeyPress(event)">
-            <button onclick="sendTextAnswer()"><i class="fas fa-paper-plane"></i></button>
+        <div class="samir-body" id="samirTextBox">
+            مرحباً بك! اضغط على زر "ابدأ المقابلة التجريبية" لبدء السيناريو الصوتي التفاعلي مع الأستاذ سامر..
         </div>
-
         <div class="samir-controls">
             <button class="samir-btn btn-start" id="startBtn" onclick="initSamir()">ابدأ المقابلة التجريبية <i class="fas fa-play"></i></button>
             <button class="samir-btn btn-mic" id="micBtn" onclick="toggleMic()">تحدث الآن <i class="fas fa-microphone"></i></button>
@@ -136,73 +216,184 @@
     </div>
 
     <script>
-        // رابط السيرفر الأونلاين الخاص بك على Hugging Face 🚀
-        const SERVER_URL = "https://mustafamakahleh-samir-hr-agent.hf.space";
+        let currentLessonId = 'job-lesson-1';
+        let currentVideoType = 'drive';
+        const totalLessonsCount = 4;
+
+        const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
+        let chatHistory = [];
+        
+        const systemInstruction = "You are 'Mr. Samir', an expert HR manager conducting a professional and realistic job interview. Speak ONLY in clear, natural English. Keep your responses brief, friendly but professional, and always limit yourself to ONE follow-up question at a time to maintain an interactive dialogue. If the user greets you or responds, acknowledge it and smoothly ask the next standard interview question. Never break character.";
 
         let recognition;
         let isListening = false;
-        const totalLessons = 1;
-        let completedLessons = new Set();
 
         function checkAccess() {
             if(document.getElementById('passCode').value === '51talk') {
                 document.getElementById('lock-screen').style.display = 'none';
+                loadUserData();
                 initSpeechRecognition();
-            } else { alert('الرمز خطأ!'); }
+            } else {
+                alert('الرمز خطأ!');
+            }
         }
 
-        function playMedia(id, title, desc, type, element) {
-            document.querySelectorAll('.lesson-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
+        function playMedia(source, title, desc, type, el) {
+            document.querySelectorAll('.lesson-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            currentLessonId = el.id;
+            currentVideoType = type;
+
             document.getElementById('titleText').innerText = title;
             document.getElementById('descText').innerText = desc;
             
-            const wrapper = document.getElementById('playerWrapper');
+            const video = document.getElementById('directVideo');
+            const iframe = document.getElementById('driveFrame');
+            const resumeAlert = document.getElementById('resumeAlert');
+            
+            resumeAlert.style.display = 'none';
+
             if(type === 'drive') {
-                wrapper.innerHTML = `<iframe id="driveFrame" src="https://drive.google.com/file/d/DirectID/preview" allowfullscreen></iframe>`.replace('DirectID', id);
+                video.style.display = 'none';
+                video.pause();
+                iframe.style.display = 'block';
+                iframe.src = `https://drive.google.com/file/d/${source}/preview`;
+                
+                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
+                if (savedTime && parseFloat(savedTime) > 5) {
+                    let mins = Math.floor(savedTime / 60);
+                    let secs = Math.floor(savedTime % 60);
+                    document.getElementById('resumeAlertText').innerText = `توقفت سابقاً عند الدقيقة ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                    resumeAlert.style.display = 'flex';
+                }
+            } else {
+                iframe.style.display = 'none';
+                iframe.src = '';
+                video.style.display = 'block';
+                video.src = source;
+                video.play();
+
+                let savedTime = localStorage.getItem('job_time_' + currentLessonId);
+                if (savedTime) {
+                    video.currentTime = parseFloat(savedTime);
+                }
             }
+            
+            localStorage.setItem('job_last_watched', currentLessonId);
+        }
+
+        const directVideoPlayer = document.getElementById('directVideo');
+        directVideoPlayer.ontimeupdate = function() {
+            if (currentVideoType === 'cloudinary' && directVideoPlayer.currentTime > 2) {
+                localStorage.setItem('job_time_' + currentLessonId, directVideoPlayer.currentTime);
+            }
+        };
+
+        function updateProgressBar() {
+            const completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
+            const completedLessonsCount = completedList.filter(id => id.startsWith('job-lesson-')).length;
+            const percentage = Math.round((completedLessonsCount / totalLessonsCount) * 100);
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressPercent').innerText = percentage + '%';
         }
 
         function toggleLessonCompletion(id, event) {
-            event.stopPropagation();
-            const element = document.getElementById(id);
-            if(completedLessons.has(id)) {
-                completedLessons.delete(id);
-                element.classList.remove('completed-item');
+            if(event) event.stopPropagation(); 
+            
+            const el = document.getElementById(id);
+            let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
+            
+            if (el.classList.contains('completed-item')) {
+                el.classList.remove('completed-item');
+                completedList = completedList.filter(itemId => itemId !== id);
             } else {
-                completedLessons.add(id);
-                element.classList.add('completed-item');
+                el.classList.add('completed-item');
+                if (!completedList.includes(id)) completedList.push(id);
             }
-            const percent = Math.round((completedLessons.size / totalLessons) * 100);
-            document.getElementById('progressPercent').innerText = percent + '%';
-            document.getElementById('progressBar').style.width = percent + '%';
+            
+            localStorage.setItem('job_completed_lessons', JSON.stringify(completedList));
+            updateProgressBar();
+        }
+
+        function loadUserData() {
+            let completedList = JSON.parse(localStorage.getItem('job_completed_lessons') || '[]');
+            completedList.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add('completed-item');
+            });
+
+            updateProgressBar();
+
+            let lastLesson = localStorage.getItem('job_last_watched');
+            if (lastLesson) {
+                const el = document.getElementById(lastLesson);
+                if (el) {
+                    const infoEl = el.querySelector('.lesson-info');
+                    if(infoEl) infoEl.click();
+                }
+            }
         }
 
         function initSpeechRecognition() {
             if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 recognition = new SpeechRecognition();
-                recognition.lang = 'en-US';
+                recognition.continuous = false;
+                
+                // تفعيل التعرف التلقائي على اللغتين لمنع النصوص الفارغة
+                recognition.lang = 'en-US'; 
+                
+                recognition.interimResults = false;
+
                 recognition.onstart = () => {
                     isListening = true;
-                    document.getElementById('micBtn').innerHTML = 'جاري الاستماع... <i class="fas fa-spinner fa-spin"></i>';
+                    const micBtn = document.getElementById('micBtn');
+                    micBtn.innerHTML = 'جاري الاستماع... <i class="fas fa-spinner fa-spin"></i>';
+                    micBtn.classList.add('listening');
                 };
+
+                recognition.onerror = (e) => {
+                    console.error("Speech Recognition Error: ", e);
+                    stopMicUI();
+                };
+
                 recognition.onend = () => {
-                    isListening = false;
-                    document.getElementById('micBtn').innerHTML = 'تحدث الآن <i class="fas fa-microphone"></i>';
+                    stopMicUI();
                 };
+
                 recognition.onresult = async (event) => {
                     const studentText = event.results[0][0].transcript;
-                    if (!studentText.trim()) return;
+                    
+                    // صمام أمان: إذا كان النص فارغاً أو لم يُسمع جيداً، نمنع إرساله لمنع انهيار الاتصال
+                    if (!studentText || !studentText.trim()) {
+                        showSamirText("⚠️ لم أسمعك جيداً، اضغط على 'تحدث الآن' وأعد الإجابة بصوت واضح.");
+                        return;
+                    }
+                    
                     showSamirText(`أنت: ${studentText}`);
                     await talkToGemini(studentText);
                 };
+            } else {
+                document.getElementById('samirTextBox').innerText = "متصفحك لا يدعم التعرف الصوتي المباشر، يرجى استخدام متصفح Google Chrome.";
             }
+        }
+
+        function stopMicUI() {
+            isListening = false;
+            const micBtn = document.getElementById('micBtn');
+            micBtn.innerHTML = 'تحدث الآن <i class="fas fa-microphone"></i>';
+            micBtn.classList.remove('listening');
         }
 
         function toggleMic() {
             if (!recognition) return;
-            if (isListening) { recognition.stop(); } else { recognition.start(); }
+            if (isListening) {
+                recognition.stop();
+            } else {
+                // محاولة تعيين اللغة مرنة لالتقاط أي نطق بصوت واضح
+                recognition.start();
+            }
         }
 
         function showSamirText(text) {
@@ -214,60 +405,87 @@
         function samirSpeak(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
+                
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
+                utterance.rate = 0.95;
+                
+                utterance.onend = () => {
+                    setTimeout(() => { toggleMic(); }, 600);
+                };
+
                 window.speechSynthesis.speak(utterance);
             }
         }
 
-        async function initSamir() {
+        function initSamir() {
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
-            document.getElementById('inputZone').style.display = 'flex';
             
-            try {
-                await fetch(`${SERVER_URL}/reset`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: "student_session_1" })
-                });
-            } catch(e) {}
-
+            chatHistory = []; 
+            
             const initialGreeting = "Hello! I am Mr. Samir, your HR interviewer today. Let's start our mock interview. Could you please tell me about yourself?";
             showSamirText(`سامر: ${initialGreeting}`);
             samirSpeak(initialGreeting);
+            
+            chatHistory.push({
+                role: "model",
+                parts: [{ text: initialGreeting }]
+            });
         }
-
-        async function sendTextAnswer() {
-            const inputField = document.getElementById('samirInputField');
-            const answer = inputField.value.trim();
-            if(!answer) return;
-            inputField.value = "";
-            showSamirText(`أنت: ${answer}`);
-            await talkToGemini(answer);
-        }
-
-        function handleKeyPress(e) { if(e.key === 'Enter') sendTextAnswer(); }
 
         async function talkToGemini(studentResponse) {
+            // فحص إضافي أخير للتأكد من سلامة النص المُرسل للسيرفر
+            if(!studentResponse || studentResponse.trim().length === 0) {
+                 showSamirText("⚠️ النص فارغ! اضغط على تحدث الآن وتكلم مرة أخرى.");
+                 return;
+            }
+
             showSamirText("سامر يفكر... 🧠");
+            
+            chatHistory.push({
+                role: "user",
+                parts: [{ text: studentResponse }]
+            });
+
             try {
-                const response = await fetch(`${SERVER_URL}/chat`, {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+                
+                const requestBody = {
+                    contents: chatHistory,
+                    systemInstruction: {
+                        parts: [{ text: systemInstruction }]
+                    }
+                };
+
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_id: "student_session_1", message: studentResponse })
+                    body: JSON.stringify(requestBody)
                 });
-                
+
                 const data = await response.json();
                 
-                if (data.reply) {
-                    showSamirText(`سامر: ${data.reply}`);
-                    samirSpeak(data.reply);
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+                    const samirReply = data.candidates[0].content.parts[0].text;
+                    
+                    showSamirText(`سامر: ${samirReply}`);
+                    samirSpeak(samirReply);
+
+                    chatHistory.push({
+                        role: "model",
+                        parts: [{ text: samirReply }]
+                    });
                 } else {
-                    showSamirText("⚠️ حدث خطأ في معالجة البيانات داخل السيرفر الأونلاين.");
+                    // إذا أرجع السيرفر رد غير متوقع بسبب جودة المدخلات، نقوم بحذف الدور الأخير لإصلاح الـ History
+                    chatHistory.pop();
+                    showSamirText("⚠️ سامر لم يستطع فهم الرد. اضغط 'تحدث الآن' وتحدث بإنجليزية واضحة ومستمرة.");
                 }
+
             } catch (error) {
-                showSamirText("❌ تعذر الاتصال بالسيرفر أونلاين. تأكد أن الـ Space في Hugging Face بحالة Running.");
+                console.error("Fetch API Error:", error);
+                chatHistory.pop(); // التراجع لمنع تلف الـ History
+                showSamirText("عذراً، حدث خطأ أثناء الاتصال بالخادم. اضغط على 'تحدث الآن' وأعد المحاولة بصوت أعلى.");
             }
         }
     </script>
