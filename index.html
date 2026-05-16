@@ -6,7 +6,7 @@
     <title>أكاديمية تكتيكات مقابلات العمل | Job Interview Academy</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght=400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
         :root { 
             --bg: #0a1128; 
             --sidebar: #101f42; 
@@ -43,17 +43,6 @@
         .pdf-item:hover { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; transform: translateY(-1px); }
         .pdf-item i.fa-file-pdf { color: var(--success); font-size: 1.2rem; }
         .pdf-item i.fa-external-link-alt { font-size: 0.85rem; opacity: 0.7; }
-
-        /* تنسيق مخصص لزر محاكاة المقابلة الصوتية */
-        .interview-btn-item { background: linear-gradient(135deg, rgba(0, 180, 216, 0.25), rgba(16, 31, 66, 0.6)); border: 1px solid rgba(0, 180, 216, 0.5); color: #90e0ef; font-weight: bold; cursor: pointer; transition: all 0.3s ease; position: relative; }
-        .interview-btn-item:hover { background: var(--accent); color: white; transform: scale(1.02); box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4); }
-        .interview-btn-item i.fa-phone-alt { color: #fff; animation: pulse 1.5s infinite; }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
-        }
 
         .completion-btn-zone { padding: 5px; cursor: pointer; color: rgba(255,255,255,0.2); transition: 0.2s; }
         .completion-btn-zone:hover { color: var(--success); }
@@ -150,13 +139,6 @@
                 <i class="fas fa-external-link-alt"></i>
             </a>
 
-            <div class="section-title">المرحلة الخامسة: التدريب العملي</div>
-            <div class="lesson-item interview-btn-item" onclick="openVoiceflowChat();">
-                <div class="lesson-info">
-                    <i class="fas fa-phone-alt"></i> <span id="btn-text">ابدأ مقابلة العمل التجريبية الآن 📞</span>
-                </div>
-            </div>
-
         </div>
     </aside>
 
@@ -180,36 +162,6 @@
         let currentLessonId = 'job-lesson-1';
         let currentVideoType = 'drive';
         const totalLessonsCount = 4;
-
-        // دالة تحكم قوية وشاملة لفتح الـ Chatbot فوراً
-        function openVoiceflowChat() {
-            const btnText = document.getElementById('btn-text');
-            
-            // التحقق من وجود الكائن وبدء تشغيله بجميع الطرق المدعومة
-            if (window.voiceflow && window.voiceflow.chat) {
-                try {
-                    window.voiceflow.chat.show();
-                    window.voiceflow.chat.open();
-                } catch(e) {
-                    // طريقة بديلة في حال تحديثات معينة في مكتبة Voiceflow المحدثة
-                    if(typeof window.voiceflow.chat.open === 'function') {
-                        window.voiceflow.chat.open();
-                    }
-                }
-            } else {
-                btnText.innerText = "جاري الاتصال بـ سامر... انتظر ثانية ⏳";
-                setTimeout(() => {
-                    if (window.voiceflow && window.voiceflow.chat) {
-                        window.voiceflow.chat.show();
-                        window.voiceflow.chat.open();
-                        btnText.innerHTML = "ابدأ مقابلة العمل التجريبية الآن 📞";
-                    } else {
-                        alert("لم يتم تحميل النظام الذكي بشكل كامل بعد، يرجى إعادة تنشيط الصفحة أو المحاولة خلال ثوانٍ قليلة.");
-                        btnText.innerHTML = "ابدأ مقابلة العمل التجريبية الآن 📞";
-                    }
-                }, 1500);
-            }
-        }
 
         function checkAccess() {
             if(document.getElementById('passCode').value === '51talk') {
@@ -323,9 +275,8 @@
           var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
           v.onload = function() {
             window.voiceflow.chat.load({
-              verify: { projectId: '6a07bcf25febbe48f6148139' },
+              verify: { projectID: '6a07bcf25febbe48f6148139' },
               url: 'https://general-runtime.voiceflow.com',
-              versionID: 'production',
               voice: {
                 url: "https://runtime-api.voiceflow.com"
               }
