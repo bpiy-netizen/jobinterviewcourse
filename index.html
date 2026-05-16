@@ -92,6 +92,8 @@
 
         @media (max-width: 1000px) { body { flex-direction: column; overflow: auto; } .sidebar { width: 100%; } .samir-widget { width: calc(100% - 40px); left: 20px; bottom: 10px; } }
     </style>
+
+    <script src="https://unpkg.com/@google/generative-ai@0.1.1/dist/index.umd.js"></script>
 </head>
 <body>
 
@@ -215,17 +217,12 @@
         </div>
     </div>
 
-    <script type="module">
-        import { GoogleGenAI } from "https://esm.run/@google/generative-ai";
-        window.GoogleGenAI = GoogleGenAI;
-    </script>
-
     <script>
         let currentLessonId = 'job-lesson-1';
         let currentVideoType = 'drive';
         const totalLessonsCount = 4;
 
-        // ثوابت المساعد الذكي والمفتاح الخاص بك
+        // مفتاح الـ API الخاص بك وثوابت الـ Chat
         const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
         let modelChat;
         let recognition;
@@ -338,7 +335,6 @@
             }
         }
 
-        // إعداد التعرف الصوتي بشكل نظيف ومستقل
         function initSpeechRecognition() {
             if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -414,11 +410,18 @@
             }
         }
 
-        // الوظيفة الرئيسية لبدء المحاكاة - الآن مرئية للزر 100%
+        // تشغيل فوري وبدون أي شروط للتحميل
         async function initSamir() {
-            if (!window.GoogleGenAI) {
-                showSamirText("⚠️ جاري تحميل المكتبات الذكية، يرجى الانتظار ثانيتين ثم الضغط مجدداً..");
-                return;
+            // التحقق من وجود الحزمة التي تم استدعاؤها من unpkg بنجاح
+            if (typeof window.GoogleGenAI === 'undefined' && typeof window.GenerativeAI === 'undefined') {
+                // محاولة القراءة من الكائن العالمي في النسخ الحديثة لـ UMD
+                if (window.GoogleContentGenerator || window.GoogleGenerativeAI) {
+                    window.GoogleGenAI = window.GoogleGenerativeAI;
+                } else {
+                    showSamirText("⚠️ جاري تهيئة الاتصال بالسيرفر، اضغط مجدداً الآن..");
+                    window.GoogleGenAI = window.GenerativeAI || (window.GoogleGenAIClient ? window.GoogleGenAIClient.GoogleGenAI : undefined);
+                    return;
+                }
             }
 
             document.getElementById('startBtn').style.display = 'none';
@@ -426,7 +429,10 @@
             showSamirText("جاري تشغيل المساعد الصوتي... ⏳");
 
             try {
-                const ai = new window.GoogleGenAI({ apiKey: GEMINI_API_KEY });
+                // استخدام الطريقة الكلاسيكية لتهيئة الحزمة المدمجة عالمياً لـ UMD
+                const GoogleGenAIClass = window.GoogleGenAI || (window.GoogleGenAIClient ? window.GoogleGenAIClient.GoogleGenAI : null);
+                const ai = new GoogleGenAIClass({ apiKey: GEMINI_API_KEY });
+                
                 modelChat = ai.getGenerativeModel({ model: "gemini-1.5-flash" }).startChat({
                     history: [
                         {
@@ -442,7 +448,7 @@
 
             } catch (err) {
                 console.error("Initialization Error: ", err);
-                showSamirText("فشل إعداد المساعد الصوتي. تأكد من اتصالك بالإنترنت.");
+                showSamirText("فشل إعداد المساعد الصوتي. تأكد من أن جهازك متصل بالإنترنت جيداً.");
             }
         }
 
