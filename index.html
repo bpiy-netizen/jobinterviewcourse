@@ -44,9 +44,9 @@
         .pdf-item i.fa-file-pdf { color: var(--success); font-size: 1.2rem; }
         .pdf-item i.fa-external-link-alt { font-size: 0.85rem; opacity: 0.7; }
 
-        /* تنسيق مخصص لزر محاكاة المقابلة الصوتية أسفل القائمة */
-        .interview-btn-item { background: linear-gradient(135deg, rgba(0, 180, 216, 0.15), rgba(16, 31, 66, 0.4)); border: 1px solid rgba(0, 180, 216, 0.4); color: #90e0ef; font-weight: bold; transition: all 0.3s ease; }
-        .interview-btn-item:hover { background: var(--accent); color: white; transform: scale(1.02); box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3); }
+        /* تنسيق مخصص وثابت لزر محاكاة المقابلة الصوتية */
+        .interview-btn-item { background: linear-gradient(135deg, rgba(0, 180, 216, 0.25), rgba(16, 31, 66, 0.6)); border: 1px solid rgba(0, 180, 216, 0.5); color: #90e0ef; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+        .interview-btn-item:hover { background: var(--accent); color: white; transform: scale(1.02); box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4); }
         .interview-btn-item i.fa-phone-alt { color: #fff; animation: pulse 1.5s infinite; }
 
         @keyframes pulse {
@@ -130,7 +130,7 @@
 
             <div class="section-title">المرحلة الرابعة: التدريب الشامل</div>
             <div class="lesson-item" id="job-lesson-4">
-                <div class="lesson-info" onclick="playMedia('1pK6lQwJ-XPFHAGQzma8vNss206X624wu', '4. محاكاة الأسئلة الشائعة وال التدريب الصوتي (Podcast Practice)', 'بودكاست تدريبي مكثف يعلمك الإجابة على الأسئلة الكبرى (نقاط القوة، الرواتب، خطط المستقبل) بعبارات إنجليزية بسيطة وقوية لتتحدث بثقة كاملة.', 'drive', this.parentElement)">
+                <div class="lesson-info" onclick="playMedia('1pK6lQwJ-XPFHAGQzma8vNss206X624wu', '4. محاكاة الأسئلة الشائعة والتدريب الصوتي (Podcast Practice)', 'بودكاست تدريبي مكثف يعلمك الإجابة على الأسئلة الكبرى (نقاط القوة، الرواتب، خطط المستقبل) بعبارات إنجليزية بسيطة وقوية لتتحدث بثقة كاملة.', 'drive', this.parentElement)">
                     <i class="fas fa-graduation-cap"></i> <span>4. محاكاة الأسئلة الشائعة والتدريب الصوتي</span>
                 </div>
                 <div class="completion-btn-zone" onclick="toggleLessonCompletion('job-lesson-4', event)"><i class="fas fa-check-circle"></i></div>
@@ -151,7 +151,7 @@
             </a>
 
             <div class="section-title">المرحلة الخامسة: التدريب العملي</div>
-            <div class="lesson-item interview-btn-item" onclick="window.voiceflow.chat.open();">
+            <div class="lesson-item interview-btn-item" onclick="openVoiceflowWidget();">
                 <div class="lesson-info">
                     <i class="fas fa-phone-alt"></i> <span>ابدأ مقابلة العمل التجريبية الآن 📞</span>
                 </div>
@@ -180,6 +180,18 @@
         let currentLessonId = 'job-lesson-1';
         let currentVideoType = 'drive';
         const totalLessonsCount = 4;
+
+        // دالة مخصصة لضمان إظهار وفتح أداة Voiceflow فوراً عند الضغط
+        function openVoiceflowWidget() {
+            if (window.voiceflow && window.voiceflow.chat) {
+                window.voiceflow.chat.show();
+                setTimeout(() => {
+                    window.voiceflow.chat.open();
+                }, 100);
+            } else {
+                alert("جاري تحميل نظام المقابلة الذكي، يرجى المحاولة خلال ثوانٍ...");
+            }
+        }
 
         function checkAccess() {
             if(document.getElementById('passCode').value === '51talk') {
