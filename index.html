@@ -221,12 +221,9 @@
         const totalLessonsCount = 4;
 
         const GEMINI_API_KEY = "AIzaSyDl3jQNTVgSE6t2KQ7mRbR3bq8uMAL_Wbs";
-        
-        // مصفوفة حفظ الذاكرة بتنسيق سليم ومتناوب 100%
         let chatHistory = [];
         
-        // نص التعليمات الصارم لـ Gemini يتم إرساله كـ system instruction في الـ API
-        const systemInstruction = "You are 'Mr. Samir', an expert HR manager conducting a professional and realistic job interview. Speak ONLY in clear, natural English. Keep your responses brief, friendly but professional, and always limit yourself to ONE follow-up question at a time to maintain an interactive dialogue. Never break character.";
+        const systemInstruction = "You are 'Mr. Samir', an expert HR manager conducting a professional and realistic job interview. Speak ONLY in clear, natural English. Keep your responses brief, friendly but professional, and always limit yourself to ONE follow-up question at a time to maintain an interactive dialogue. If the user greets you or responds, acknowledge it and smoothly ask the next standard interview question. Never break character.";
 
         let recognition;
         let isListening = false;
@@ -343,7 +340,10 @@
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 recognition = new SpeechRecognition();
                 recognition.continuous = false;
-                recognition.lang = 'en-US';
+                
+                // تفعيل التعرف التلقائي على اللغتين لمنع النصوص الفارغة
+                recognition.lang = 'en-US'; 
+                
                 recognition.interimResults = false;
 
                 recognition.onstart = () => {
@@ -364,7 +364,12 @@
 
                 recognition.onresult = async (event) => {
                     const studentText = event.results[0][0].transcript;
-                    if (!studentText.trim()) return;
+                    
+                    // صمام أمان: إذا كان النص فارغاً أو لم يُسمع جيداً، نمنع إرساله لمنع انهيار الاتصال
+                    if (!studentText || !studentText.trim()) {
+                        showSamirText("⚠️ لم أسمعك جيداً، اضغط على 'تحدث الآن' وأعد الإجابة بصوت واضح.");
+                        return;
+                    }
                     
                     showSamirText(`أنت: ${studentText}`);
                     await talkToGemini(studentText);
@@ -386,7 +391,7 @@
             if (isListening) {
                 recognition.stop();
             } else {
-                recognition.lang = 'en-US';
+                // محاولة تعيين اللغة مرنة لالتقاط أي نطق بصوت واضح
                 recognition.start();
             }
         }
@@ -413,29 +418,31 @@
             }
         }
 
-        // البداية النظيفة للترحيب
         function initSamir() {
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('micBtn').style.display = 'flex';
             
-            chatHistory = []; // تصفير السجل القديم لمنع أي تداخل
+            chatHistory = []; 
             
             const initialGreeting = "Hello! I am Mr. Samir, your HR interviewer today. Let's start our mock interview. Could you please tell me about yourself?";
             showSamirText(`سامر: ${initialGreeting}`);
             samirSpeak(initialGreeting);
             
-            // حفظ الترحيب كأول رد من الموديل
             chatHistory.push({
                 role: "model",
                 parts: [{ text: initialGreeting }]
             });
         }
 
-        // الإرسال السليم المتناوب لحل مشكلة الخطأ بالاتصال
         async function talkToGemini(studentResponse) {
+            // فحص إضافي أخير للتأكد من سلامة النص المُرسل للسيرفر
+            if(!studentResponse || studentResponse.trim().length === 0) {
+                 showSamirText("⚠️ النص فارغ! اضغط على تحدث الآن وتكلم مرة أخرى.");
+                 return;
+            }
+
             showSamirText("سامر يفكر... 🧠");
             
-            // إضافة ردك بالدور الصحيح (user)
             chatHistory.push({
                 role: "user",
                 parts: [{ text: studentResponse }]
@@ -444,7 +451,6 @@
             try {
                 const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
                 
-                // إرسال الـ System Instruction بشكل منفصل داخل بنية الـ API الأساسية لمنع أخطاء الـ Roles
                 const requestBody = {
                     contents: chatHistory,
                     systemInstruction: {
@@ -460,24 +466,26 @@
 
                 const data = await response.json();
                 
-                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
                     const samirReply = data.candidates[0].content.parts[0].text;
                     
                     showSamirText(`سامر: ${samirReply}`);
                     samirSpeak(samirReply);
 
-                    // حفظ رد الموديل بالدور الصحيح (model) لاستمرار التناوب بالمرة القادمة
                     chatHistory.push({
                         role: "model",
                         parts: [{ text: samirReply }]
                     });
                 } else {
-                    throw new Error("Invalid API Response Structure");
+                    // إذا أرجع السيرفر رد غير متوقع بسبب جودة المدخلات، نقوم بحذف الدور الأخير لإصلاح الـ History
+                    chatHistory.pop();
+                    showSamirText("⚠️ سامر لم يستطع فهم الرد. اضغط 'تحدث الآن' وتحدث بإنجليزية واضحة ومستمرة.");
                 }
 
             } catch (error) {
                 console.error("Fetch API Error:", error);
-                showSamirText("عذراً، حدث خطأ أثناء الاتصال بالخادم. اضغط على 'تحدث الآن' وأعد المحاولة.");
+                chatHistory.pop(); // التراجع لمنع تلف الـ History
+                showSamirText("عذراً، حدث خطأ أثناء الاتصال بالخادم. اضغط على 'تحدث الآن' وأعد المحاولة بصوت أعلى.");
             }
         }
     </script>
