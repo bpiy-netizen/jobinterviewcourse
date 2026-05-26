@@ -70,7 +70,8 @@
         
         .resume-alert { color: var(--accent); font-size: 0.9rem; display: none; align-items: center; gap: 6px; background: rgba(0,180,216,0.1); padding: 8px 15px; border-radius: 6px; margin-top: 15px; width: fit-content; }
 
-        .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 340px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: flex; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
+        /* تعديل: جعل نافذة سامر مخفية بشكل افتراضي (display: none) */
+        .samir-widget { position: fixed; bottom: 20px; left: 20px; width: 340px; background: var(--sidebar); border: 1px solid var(--accent); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); z-index: 1000; overflow: hidden; display: none; flex-direction: column; font-family: 'Cairo', sans-serif; transition: 0.3s ease; }
         .samir-header { background: linear-gradient(135deg, var(--sidebar), #162c5d); padding: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,180,216,0.15); }
         .samir-avatar { width: 40px; height: 40px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; position: relative; }
         .samir-status { width: 10px; height: 10px; background: var(--success); border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid var(--sidebar); }
@@ -170,7 +171,7 @@
             </a>
 
             <div class="section-title">المرحلة الخامسة: التقييم والمحاكاة</div>
-            <div class="lesson-item interview-notice-item">
+            <div class="lesson-item interview-notice-item" id="interviewNoticeBtn" onclick="activateSamirWidget()">
                 <div class="lesson-info">
                     <i class="fas fa-phone-alt"></i> <span>ابدأ مقابلة العمل التجريبية الآن (من الأسفل) 📞</span>
                 </div>
@@ -195,7 +196,7 @@
         </div>
     </main>
 
-    <div class="samir-widget">
+    <div class="samir-widget" id="samirContainer">
         <div class="samir-header">
             <div class="samir-avatar">
                 <i class="fas fa-user-tie"></i>
@@ -236,6 +237,20 @@
             } else {
                 alert('الرمز خطأ!');
             }
+        }
+
+        /* تعديل: وظيفة خاصة لإظهار نافذة سامر وتشغيلها فوراً عند الضغط على زر التقييم والمحاكاة */
+        function activateSamirWidget() {
+            const samirContainer = document.getElementById('samirContainer');
+            samirContainer.style.display = 'flex'; // إظهار النافذة تحت عاليسار
+            
+            // إذا لم تبدأ المقابلة بعد، نقوم بتشغيلها تلقائياً لراحة الطالب
+            if(document.getElementById('startBtn').style.display !== 'none') {
+                initSamir();
+            }
+            
+            // سحب الشاشة لأسفل النافذة في وضع الموبايل لضمان رؤيتها
+            samirContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }
 
         function playMedia(source, title, desc, type, el) {
@@ -340,10 +355,7 @@
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 recognition = new SpeechRecognition();
                 recognition.continuous = false;
-                
-                // تفعيل التعرف التلقائي على اللغتين لمنع النصوص الفارغة
                 recognition.lang = 'en-US'; 
-                
                 recognition.interimResults = false;
 
                 recognition.onstart = () => {
@@ -365,7 +377,6 @@
                 recognition.onresult = async (event) => {
                     const studentText = event.results[0][0].transcript;
                     
-                    // صمام أمان: إذا كان النص فارغاً أو لم يُسمع جيداً، نمنع إرساله لمنع انهيار الاتصال
                     if (!studentText || !studentText.trim()) {
                         showSamirText("⚠️ لم أسمعك جيداً، اضغط على 'تحدث الآن' وأعد الإجابة بصوت واضح.");
                         return;
@@ -391,7 +402,6 @@
             if (isListening) {
                 recognition.stop();
             } else {
-                // محاولة تعيين اللغة مرنة لالتقاط أي نطق بصوت واضح
                 recognition.start();
             }
         }
@@ -435,7 +445,6 @@
         }
 
         async function talkToGemini(studentResponse) {
-            // فحص إضافي أخير للتأكد من سلامة النص المُرسل للسيرفر
             if(!studentResponse || studentResponse.trim().length === 0) {
                  showSamirText("⚠️ النص فارغ! اضغط على تحدث الآن وتكلم مرة أخرى.");
                  return;
@@ -477,14 +486,13 @@
                         parts: [{ text: samirReply }]
                     });
                 } else {
-                    // إذا أرجع السيرفر رد غير متوقع بسبب جودة المدخلات، نقوم بحذف الدور الأخير لإصلاح الـ History
                     chatHistory.pop();
                     showSamirText("⚠️ سامر لم يستطع فهم الرد. اضغط 'تحدث الآن' وتحدث بإنجليزية واضحة ومستمرة.");
                 }
 
             } catch (error) {
                 console.error("Fetch API Error:", error);
-                chatHistory.pop(); // التراجع لمنع تلف الـ History
+                chatHistory.pop(); 
                 showSamirText("عذراً، حدث خطأ أثناء الاتصال بالخادم. اضغط على 'تحدث الآن' وأعد المحاولة بصوت أعلى.");
             }
         }
